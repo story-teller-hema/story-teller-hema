@@ -191,9 +191,15 @@
 
         color: var(--text);
 
-        font-size: 24px;
+        font-size: 28px;
 
         cursor: pointer;
+
+        padding: 8px;
+
+        z-index: 1000;
+
+        position: relative;
 
     }
 
@@ -841,6 +847,8 @@
 
             display: block;
 
+            -webkit-tap-highlight-color: transparent;
+
         }
 
         .hero {
@@ -1082,7 +1090,7 @@
 <!-- Hero Section -->
 <section class="hero">
 <div class="hero-content">
-<span class="hero-label">Senior Digital Experience Strategist</span>
+<span class="hero-label">Digital Experience Strategist</span>
 <h1>Modernizing Digital Experiences Through Behavioral Intelligence</h1>
 <p class="hero-subtitle">
 
@@ -1201,29 +1209,35 @@
 
     // Close menu when clicking a link
 
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    document.addEventListener('DOMContentLoaded', function() {
 
-        link.addEventListener('click', () => {
+        document.querySelectorAll('.nav-links a').forEach(link => {
 
-            document.getElementById('navLinks').classList.remove('active');
+            link.addEventListener('click', () => {
+
+                document.getElementById('navLinks').classList.remove('active');
+
+            });
 
         });
 
-    });
+        // Close menu when clicking outside
 
-    // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
 
-    document.addEventListener('click', (e) => {
+            const nav = document.querySelector('nav');
 
-        const nav = document.querySelector('nav');
+            const navLinks = document.getElementById('navLinks');
 
-        const toggle = document.querySelector('.mobile-menu-toggle');
+            const toggle = document.querySelector('.mobile-menu-toggle');
 
-        if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+            if (!nav.contains(e.target) || (e.target !== toggle && !toggle.contains(e.target) && !navLinks.contains(e.target))) {
 
-            document.getElementById('navLinks').classList.remove('active');
+                navLinks.classList.remove('active');
 
-        }
+            }
+
+        });
 
     });
 </script>
