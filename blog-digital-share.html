@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From 6% to 12% Digital Share | Hema Kamineni</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+        :root { --primary:#0A0E27; --accent:#FF6B35; --success:#00D9A5; --purple:#9D4EDD; --text:#E8EAF6; --text-muted:#9BA3C7; --border:rgba(255,255,255,0.1); }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body { font-family:'Work Sans',sans-serif; background:linear-gradient(135deg,var(--primary) 0%,#0d1129 50%,#1a0e2e 100%); color:var(--text); line-height:1.7; min-height:100vh; }
+
+        body::before { content:''; position:fixed; top:0; left:0; width:100%; height:100%; background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px); background-size:50px 50px; z-index:0; pointer-events:none; }
+
+        article { max-width:800px; margin:0 auto; padding:60px 20px; position:relative; z-index:1; }
+
+        .breadcrumb { font-size:14px; color:var(--text-muted); margin-bottom:32px; }
+
+        .breadcrumb a { color:var(--accent); text-decoration:none; }
+
+        .post-header { margin-bottom:48px; }
+
+        .post-category { display:inline-block; padding:6px 14px; background:rgba(0,217,165,0.2); border:1px solid rgba(0,217,165,0.4); border-radius:20px; font-size:12px; font-weight:600; color:var(--success); text-transform:uppercase; margin-bottom:20px; }
+
+        h1 { font-family:'DM Serif Display',serif; font-size:48px; font-weight:400; line-height:1.2; margin-bottom:24px; background:linear-gradient(135deg,#ffffff 0%,var(--success) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+        .post-meta { display:flex; gap:20px; margin-bottom:32px; font-size:15px; color:var(--text-muted); }
+
+        .post-intro { font-size:20px; line-height:1.6; color:var(--text); margin-bottom:48px; padding:24px; background:rgba(0,217,165,0.05); border-left:4px solid var(--success); border-radius:8px; }
+
+        h2 { font-family:'DM Serif Display',serif; font-size:32px; font-weight:400; margin:48px 0 24px; color:var(--text); }
+
+        h3 { font-size:22px; font-weight:600; margin:36px 0 16px; }
+
+        p { margin-bottom:24px; font-size:17px; line-height:1.8; }
+
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:20px; margin:48px 0; }
+
+        .stat-box { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:16px; padding:24px; text-align:center; transition:all 0.3s; }
+
+        .stat-box:hover { transform:translateY(-4px); border-color:var(--success); }
+
+        .stat-number { font-size:36px; font-weight:700; color:var(--success); margin-bottom:8px; }
+
+        .stat-label { font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); font-weight:600; }
+
+        .chart-container { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:20px; padding:32px; margin:48px 0; }
+
+        .chart-title { font-size:20px; font-weight:600; margin-bottom:24px; }
+
+        .chart-wrapper { position:relative; height:350px; }
+
+        ul,ol { margin-left:24px; margin-bottom:24px; }
+
+        li { margin-bottom:12px; line-height:1.7; }
+
+        footer { margin-top:80px; padding-top:40px; border-top:1px solid var(--border); text-align:center; color:var(--text-muted); font-size:14px; }
+
+        footer a { color:var(--accent); text-decoration:none; }
+
+        @media (max-width:768px) { h1{font-size:32px;} .stats-grid{grid-template-columns:repeat(2,1fr);} .chart-wrapper{height:300px;} }
+</style>
+</head>
+<body>
+<article>
+<div class="breadcrumb"><a href="index.html">Home</a> / <a href="blog.html">Blog</a> / Digital Share Growth</div>
+<header class="post-header">
+<span class="post-category">Strategy Case Study</span>
+<h1>From 6% to 12% Digital Share: The Omnichannel Playbook</h1>
+<div class="post-meta"><span>September 2025</span><span>•</span><span>12 min read</span></div>
+</header>
+<div class="post-intro">Between 2022 and 2025, we doubled digital revenue share from 6% to 12% across a global QSR brand. This wasn't one silver bullet—it was methodical optimization across personalization, experimentation, and omnichannel activation. Here's the full playbook with real metrics.</div>
+<div class="content">
+<div class="stats-grid">
+<div class="stat-box"><div class="stat-number">2x</div><div class="stat-label">Digital Share</div></div>
+<div class="stat-box"><div class="stat-number">+300bps</div><div class="stat-label">Conversion Lift</div></div>
+<div class="stat-box"><div class="stat-number">$13→$15</div><div class="stat-label">AOV Growth</div></div>
+<div class="stat-box"><div class="stat-number">$1M+</div><div class="stat-label">Monthly Recovery</div></div>
+</div>
+<h2>The Starting Point (2022)</h2>
+<p>When I joined as Senior Digital Experience Strategist, digital represented just 6% of total revenue. Industry leaders were at 15-20%. We had infrastructure—mobile app, web ordering, kiosk—but not optimization. Conversion rates were mediocre. AOV was stagnant. Attribution was broken.</p>
+<p>The challenge wasn't technical debt. It was strategic fragmentation. Different teams owned different pieces without a unified North Star metric.</p>
+<div class="chart-container">
+<h3 class="chart-title">Digital Share Growth Trajectory (2022-2025)</h3>
+<div class="chart-wrapper"><canvas id="digitalShareChart"></canvas></div>
+</div>
+<h2>The 18-Month Roadmap</h2>
+<p><strong>Phase 1: Fix the Foundation (Months 1-6)</strong><br>Fixed critical bugs causing checkout drops. Standardized UTM frameworks. Resolved latency issues recovering $1M+ monthly. Implemented proper Adobe Analytics tagging. No glamorous work, but essential.</p>
+<p><strong>Phase 2: Optimize the Core (Months 7-12)</strong><br>Launched systematic A/B testing using Adobe Target. Tested everything: store locator defaults, combo prompts, offer placements, checkout flows. Ran 50+ concurrent tests without breaking things.</p>
+<p><strong>Phase 3: Personalize the Experience (Months 13-18)</strong><br>Implemented recommendation strategies. Sequenced 1:1 offers vs national promotions. Personalized product discovery. Reduced privacy opt-outs by 300bps. Digital share accelerated from 9% to 12%.</p>
+<h2>Key Initiatives That Moved the Needle</h2>
+<h3>1. Store Locator Optimization (+200bps)</h3>
+<p>Simple hypothesis: most guests reorder from the same location. We defaulted the store locator to their most recent order location. Result: +200 basis points conversion lift.</p>
+<h3>2. Offer Sequencing Strategy</h3>
+<p>1:1 offers outperformed generic promotions by 280 bps for Gen Z, 190 bps for Millennials. But generic offers worked better for first-timers needing social proof. Solution: dynamic offer logic by cohort.</p>
+<h3>3. AOV Growth Through Upsell Placement</h3>
+<p>Cart-based prompts timed to trigger when cart value hit $8-$10 lifted AOV from $13 to $15, adding $2 per transaction across millions of orders annually.</p>
+<div class="chart-container">
+<h3 class="chart-title">Conversion Lift by Region & Initiative</h3>
+<div class="chart-wrapper"><canvas id="conversionChart"></canvas></div>
+</div>
+<h2>What Didn't Work</h2>
+<ul>
+<li><strong>Over-personalization:</strong> Hyper-personalized menu recommendations felt creepy, not helpful. Conversion dropped 40 bps.</li>
+<li><strong>Push notifications:</strong> Aggressive frequency (3x/week) led to 18% app uninstalls. Scaled back to 1x/week max.</li>
+<li><strong>Gamification:</strong> "Streak" mechanics didn't sustain. QSR isn't gaming—people want food, not badges.</li>
+</ul>
+<h2>The Operating Model</h2>
+<p>We built an agile pod model: 2 FTE strategists owning roadmap, 5 embedded Martech consultants executing, weekly sprint planning via Azure DevOps, monthly business reviews with senior leadership.</p>
+<h2>Lessons for Other QSR Brands</h2>
+<p><strong>1. Fix before you optimize:</strong> 6 months on infrastructure made everything else possible.</p>
+<p><strong>2. Pick one North Star:</strong> Digital share unified teams.</p>
+<p><strong>3. Test everything:</strong> Even "obvious" improvements need validation.</p>
+<p><strong>4. Personalization is a spectrum:</strong> Start simple, add complexity only when simpler approaches plateau.</p>
+<p><strong>5. Build for scale:</strong> Pods, sprints, SLAs—these aren't bureaucracy, they're enablers.</p>
+</div>
+<footer><p><a href="blog.html">← Back to Blog</a></p></footer>
+</article>
+<script>
+
+        Chart.defaults.color='#9BA3C7'; Chart.defaults.font.family="'Work Sans',sans-serif"; Chart.defaults.borderColor='rgba(255,255,255,0.1)';
+
+        const digitalShareCtx=document.getElementById('digitalShareChart').getContext('2d');
+
+        new Chart(digitalShareCtx,{type:'line',data:{labels:['Q1 2022','Q2 2022','Q3 2022','Q4 2022','Q1 2023','Q2 2023','Q3 2023','Q4 2023','Q1 2024','Q2 2024','Q3 2024','Q4 2024','Q1 2025'],datasets:[{label:'Digital Share of Revenue',data:[6.0,6.2,6.5,7.0,7.5,8.2,9.0,9.5,10.2,10.8,11.4,11.8,12.0],borderColor:'#00D9A5',backgroundColor:'rgba(0,217,165,0.1)',borderWidth:3,tension:0.4,fill:true,pointRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false,min:5,max:13,grid:{color:'rgba(255,255,255,0.05)'},ticks:{callback:function(v){return v+'%';}}},x:{grid:{display:false}}}}});
+
+        const conversionCtx=document.getElementById('conversionChart').getContext('2d');
+
+        new Chart(conversionCtx,{type:'bar',data:{labels:['Store Locator','Offer Sequencing','Upsell Prompts','Checkout Flow','Privacy UX'],datasets:[{label:'North America',data:[200,280,150,120,100],backgroundColor:'rgba(0,217,165,0.8)',borderWidth:2},{label:'EMEA',data:[180,190,130,100,80],backgroundColor:'rgba(157,78,221,0.8)',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{callback:function(v){return '+'+v+' bps';}}},x:{grid:{display:false}}}}});
+</script>
+</body>
+</html>
+ 
