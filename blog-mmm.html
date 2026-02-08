@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMM in Practice | Hema Kamineni</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+        :root{--primary:#0A0E27;--accent:#FF6B35;--purple:#9D4EDD;--blue:#3772FF;--text:#E8EAF6;--text-muted:#9BA3C7;--border:rgba(255,255,255,0.1);}
+
+        *{margin:0;padding:0;box-sizing:border-box;}
+
+        body{font-family:'Work Sans',sans-serif;background:linear-gradient(135deg,var(--primary) 0%,#0d1129 50%,#1a0e2e 100%);color:var(--text);line-height:1.7;min-height:100vh;}
+
+        body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:50px 50px;z-index:0;pointer-events:none;}
+
+        article{max-width:800px;margin:0 auto;padding:60px 20px;position:relative;z-index:1;}
+
+        .breadcrumb{font-size:14px;color:var(--text-muted);margin-bottom:32px;}
+
+        .breadcrumb a{color:var(--accent);text-decoration:none;}
+
+        .post-category{display:inline-block;padding:6px 14px;background:rgba(157,78,221,0.2);border:1px solid rgba(157,78,221,0.4);border-radius:20px;font-size:12px;font-weight:600;color:var(--purple);text-transform:uppercase;margin-bottom:20px;}
+
+        h1{font-family:'DM Serif Display',serif;font-size:48px;font-weight:400;line-height:1.2;margin-bottom:24px;background:linear-gradient(135deg,#ffffff 0%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+        .post-meta{display:flex;gap:20px;margin-bottom:32px;font-size:15px;color:var(--text-muted);}
+
+        .post-intro{font-size:20px;line-height:1.6;margin-bottom:48px;padding:24px;background:rgba(157,78,221,0.05);border-left:4px solid var(--purple);border-radius:8px;}
+
+        h2{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;margin:48px 0 24px;}
+
+        h3{font-size:22px;font-weight:600;margin:36px 0 16px;}
+
+        p{margin-bottom:24px;font-size:17px;line-height:1.8;}
+
+        .chart-container{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:20px;padding:32px;margin:48px 0;}
+
+        .chart-title{font-size:20px;font-weight:600;margin-bottom:24px;}
+
+        .chart-wrapper{position:relative;height:350px;}
+
+        ul,ol{margin-left:24px;margin-bottom:24px;}
+
+        li{margin-bottom:12px;line-height:1.7;}
+
+        .insight-box{background:linear-gradient(135deg,rgba(157,78,221,0.1) 0%,rgba(55,114,255,0.1) 100%);border:1px solid rgba(157,78,221,0.3);border-radius:16px;padding:32px;margin:48px 0;}
+
+        .insight-box h3{margin-top:0;color:var(--purple);}
+
+        .callout{background:rgba(255,107,53,0.1);border-left:4px solid var(--accent);padding:24px;margin:32px 0;border-radius:8px;}
+
+        .callout h4{color:var(--accent);margin-bottom:12px;font-size:18px;}
+
+        footer{margin-top:80px;padding-top:40px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:14px;}
+
+        footer a{color:var(--accent);text-decoration:none;}
+
+        @media (max-width:768px){h1{font-size:32px;}.chart-wrapper{height:300px;}}
+</style>
+</head>
+<body>
+<article>
+<div class="breadcrumb"><a href="index.html">Home</a> / <a href="blog.html">Blog</a> / MMM Analysis</div>
+<header>
+<span class="post-category">Technical Deep-Dive</span>
+<h1>MMM in Practice: Optimizing $50M in QSR Media Spend</h1>
+<div class="post-meta"><span>December 2025</span><span>•</span><span>15 min read</span></div>
+</header>
+<div class="post-intro">Marketing Mix Modeling sounds theoretical until you're responsible for allocating real budgets. Here's how I'd approach optimizing a $50M media budget across TV, social, search, and digital channels—with real QSR constraints, lag effects, and incrementality challenges.</div>
+<div class="content">
+<h2>The Problem: Attribution Is Broken in QSR</h2>
+<p>A customer sees a TV ad during the Super Bowl, searches for "subs near me" two days later, clicks a paid search ad, downloads the app, then orders in-store the following week. Which channel gets credit?</p>
+<p>Last-click attribution says: paid search. Multi-touch says: split it. MMM says: all of them contributed, but TV had the biggest incremental impact. Let's measure that.</p>
+
+```
+<h2>Why Traditional Attribution Fails for Restaurants</h2>
+<p><strong>1. Offline conversion majority:</strong> 60%+ of QSR orders still happen in-store or drive-thru, not digitally. Can't cookie-track a drive-thru order.</p>
+<p><strong>2. Long consideration windows:</strong> TV ad → app download might be 2 weeks. Search attribution windows are 30 days max.</p>
+<p><strong>3. Geographic fragmentation:</strong> Media is national or DMA-level. Orders are location-specific. Connecting the dots requires store-level data.</p>
+<p><strong>4. Baseline vs incrementality:</strong> If you spend $10M on TV and sales go up 5%, how much was organic growth vs TV-driven? Attribution can't tell you. MMM can.</p>
+<h2>The MMM Approach: Regression on Steroids</h2>
+<p>At its core, MMM is multivariate regression: Y (sales) = f(TV spend, digital spend, search spend, seasonality, promotions, competitor activity, weather, etc.)</p>
+<p>The model isolates each variable's contribution to sales while controlling for everything else. But the devil is in the details.</p>
+<h2>Data Requirements</h2>
+<p><strong>2-3 years of weekly data:</strong> Need enough observations to detect patterns. Monthly data works but weekly is better.</p>
+<p><strong>Spend by channel:</strong> TV, radio, social (paid), search (paid), display, OOH, email, app push, etc.</p>
+<p><strong>Impressions/GRPs:</strong> Spend alone isn't enough. $1M in TV during the Super Bowl ≠ $1M in late-night cable.</p>
+<p><strong>Sales data:</strong> Ideally broken out by geography (DMA or store-level) and channel (in-store, app, web, kiosk).</p>
+<p><strong>External factors:</strong> Seasonality (holidays, weather), competitor activity (promotions, new locations), macroeconomic indicators (unemployment, gas prices).</p>
+<div class="chart-container">
+<h3 class="chart-title">Channel Spend vs Sales Lift (Illustrative Model)</h3>
+<div class="chart-wrapper"><canvas id="mmmChart"></canvas></div>
+</div>
+<h2>The Hard Parts: Lag Effects</h2>
+<p>TV doesn't drive sales instantly. There's a lag—usually 1-4 weeks depending on the message. "New menu item" ads have shorter lags (1 week). Brand ads have longer lags (4-8 weeks).</p>
+<p>The model needs to test different lag structures (called "adstock" in MMM). You're asking: does this week's TV spend impact this week's sales? Next week? Two weeks from now? All three?</p>
+<p>We use Adstock transformations—exponential decay functions that model how advertising effectiveness fades over time. A strong ad might have 50% retention after 1 week, 25% after 2 weeks, 12% after 3 weeks.</p>
+<h2>Isolating Incrementality</h2>
+<p>The key question MMM answers: if we cut TV spend by $5M, what happens to sales?</p>
+<p>Not what happens to "attributed" sales. What happens to TOTAL sales, including the organic baseline that would've occurred anyway.</p>
+<p>This requires baseline modeling. We separate sales into:</p>
+<ul>
+<li><strong>Base sales:</strong> What you'd get with zero marketing (brand equity, word of mouth, location traffic)</li>
+<li><strong>Incremental sales:</strong> Lift from each marketing channel above the baseline</li>
+</ul>
+<p>If TV drives $8M incremental sales on $5M spend, that's a 1.6x ROI. If social drives $3M on $5M spend, that's 0.6x. Now you know where to reallocate.</p>
+<h2>The $50M Budget Optimization</h2>
+<p>Let's say current allocation:</p>
+<ul>
+<li>TV: $20M (40%)</li>
+<li>Digital (social + display): $15M (30%)</li>
+<li>Search: $10M (20%)</li>
+<li>Other (radio, OOH, email): $5M (10%)</li>
+</ul>
+<p>MMM reveals:</p>
+<ul>
+<li>TV ROI: 1.4x (diminishing returns kicking in at current spend level)</li>
+<li>Digital ROI: 0.8x (oversaturated, too much frequency waste)</li>
+<li>Search ROI: 2.1x (undersaturated, room to grow)</li>
+<li>Other: 1.1x (radio works, OOH doesn't, email is gold)</li>
+</ul>
+<div class="callout">
+<h4>The Optimization Move</h4>
+<p>Shift $5M from Digital to Search (increase search to $15M). Cut $3M from TV (down to $17M, still above saturation floor). Reallocate $2M from OOH to email. New predicted ROI: 1.3x overall vs 1.1x current.</p>
+<p>Expected incremental revenue: $10M annually from reallocation alone, no additional spend.</p>
+</div>
+<div class="chart-container">
+<h3 class="chart-title">ROI Curves by Channel (Diminishing Returns)</h3>
+<div class="chart-wrapper"><canvas id="roiChart"></canvas></div>
+</div>
+<h2>QSR-Specific Challenges</h2>
+<p><strong>1. Franchise vs Corporate:</strong> Corporate owns national media (TV, digital). Franchisees own local (radio, OOH). Aligning incentives is hard. MMM helps by showing which channels drive store traffic.</p>
+<p><strong>2. Menu complexity:</strong> Limited time offers (LTOs) complicate the model. You need to separate "sales lift from new sandwich" vs "sales lift from the ad promoting it."</p>
+<p><strong>3. Cannibalization:</strong> Digital orders might cannibalize in-store. MMM should model total sales, not just digital, to avoid optimizing a zero-sum game.</p>
+<p><strong>4. Competitor activity:</strong> If Burger King runs a massive promotion, your sales drop regardless of your media. Model needs competitor spend/promo data to isolate your true impact.</p>
+<h2>Advanced Techniques</h2>
+<p><strong>Bayesian MMM:</strong> Traditional regression assumes fixed coefficients. Bayesian MMM models uncertainty—useful when you have limited data or want to incorporate prior beliefs (e.g., "we know TV ROI is between 1.2-1.8x").</p>
+<p><strong>Geo-level modeling:</strong> Instead of national MMM, run separate models per DMA or cluster of DMAs. Captures regional differences (TV works better in Midwest, digital in coastal cities).</p>
+<p><strong>Dynamic coefficients:</strong> Allow channel effectiveness to vary over time. Useful when creative changes or market saturation shifts.</p>
+<h2>Implementation Roadmap</h2>
+<p><strong>Month 1-2:</strong> Data collection and cleaning. This is 50% of the work. Aligning spend data with sales data across systems is painful.</p>
+<p><strong>Month 3:</strong> Model build. Test different lag structures, adstock curves, baseline assumptions.</p>
+<p><strong>Month 4:</strong> Validation. Holdout testing (remove last 3 months of data, see if model predicts it accurately).</p>
+<p><strong>Month 5:</strong> Scenario planning. Run "what if" analyses: what if we cut TV 20%? What if we double search?</p>
+<p><strong>Month 6+:</strong> Ongoing monitoring. Rerun model quarterly as new data comes in. Media effectiveness changes—models need updates.</p>
+<div class="insight-box">
+<h3>💡 The Reality Check</h3>
+<p>MMM isn't a crystal ball. It's a tool. Models are wrong (all models are), but useful. The goal isn't perfect attribution—it's better decision-making. If MMM says "search is underinvested" and you test it and ROI improves, the model was useful even if it wasn't 100% accurate.</p>
+<p>Pair MMM with incrementality tests (geo holdouts, test/control markets) to validate findings. MMM guides strategy. Tests prove it.</p>
+</div>
+<h2>Tools & Vendors</h2>
+<ul>
+<li><strong>Analytic Partners, Nielsen, Neustar:</strong> Enterprise MMM vendors. Expensive but robust.</li>
+<li><strong>Recast, Streamline:</strong> Modern SaaS MMM tools. Easier to use, lower cost.</li>
+<li><strong>Build your own:</strong> Python (statsmodels, PyMC for Bayesian), R (prophet, MASS). Requires data science chops.</li>
+</ul>
+<h2>The Bottom Line</h2>
+<p>If you're spending $50M on media, you can't afford NOT to do MMM. Even a 5% improvement in ROI is $2.5M annually. The cost of MMM? $200-500K for vendor + internal time. That's a 5-10x return on the analysis itself.</p>
+<p>Attribution tells you what happened. MMM tells you what to do next. For budget allocation, that's the difference that matters.</p>
+</div>
+<footer><p><a href="blog.html">← Back to Blog</a></p></footer>
+</article>
+<script>
+
+    Chart.defaults.color='#9BA3C7';Chart.defaults.font.family="'Work Sans',sans-serif";Chart.defaults.borderColor='rgba(255,255,255,0.1)';
+
+    const mmmCtx=document.getElementById('mmmChart').getContext('2d');
+
+    new Chart(mmmCtx,{type:'scatter',data:{datasets:[{label:'TV',data:[{x:5,y:7},{x:10,y:13},{x:15,y:18},{x:20,y:22}],backgroundColor:'rgba(157,78,221,0.8)',pointRadius:8},{label:'Search',data:[{x:2,y:4.2},{x:5,y:10.5},{x:10,y:21}],backgroundColor:'rgba(0,217,165,0.8)',pointRadius:8},{label:'Social',data:[{x:5,y:4},{x:10,y:7},{x:15,y:9}],backgroundColor:'rgba(255,107,53,0.8)',pointRadius:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true,title:{display:true,text:'Sales Lift ($M)'},grid:{color:'rgba(255,255,255,0.05)'}},x:{title:{display:true,text:'Channel Spend ($M)'},grid:{color:'rgba(255,255,255,0.05)'}}}}});
+
+    const roiCtx=document.getElementById('roiChart').getContext('2d');
+
+    new Chart(roiCtx,{type:'line',data:{labels:['$5M','$10M','$15M','$20M','$25M','$30M'],datasets:[{label:'Search ROI',data:[2.8,2.5,2.1,1.7,1.4,1.1],borderColor:'#00D9A5',borderWidth:3,tension:0.4},{label:'TV ROI',data:[2.2,1.8,1.5,1.4,1.2,1.0],borderColor:'#9D4EDD',borderWidth:3,tension:0.4},{label:'Social ROI',data:[1.5,1.2,0.9,0.7,0.6,0.5],borderColor:'#FF6B35',borderWidth:3,tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:false,min:0,max:3,title:{display:true,text:'ROI Multiple'},grid:{color:'rgba(255,255,255,0.05)'}},x:{grid:{display:false}}}}});
+</script>
+
+```
+</body>
+</html>
+ 
