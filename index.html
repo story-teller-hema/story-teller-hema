@@ -55,6 +55,8 @@
 
         min-height: 100vh;
 
+        overflow-x: hidden;
+
     }
 
     body::before {
@@ -314,6 +316,8 @@
         gap: 20px;
 
         animation: fadeInUp 0.8s ease-out 0.3s both;
+
+        flex-wrap: wrap;
 
     }
 
@@ -809,6 +813,14 @@
 
             padding: 60px 20px 40px;
 
+            text-align: center;
+
+        }
+
+        .hero-content {
+
+            max-width: 100%;
+
         }
 
         h1 {
@@ -827,13 +839,21 @@
 
             flex-direction: column;
 
+            align-items: center;
+
+            width: 100%;
+
         }
 
         .btn {
 
             width: 100%;
 
+            max-width: 100%;
+
             text-align: center;
+
+            display: block;
 
         }
 
@@ -855,6 +875,12 @@
 
         }
 
+        .stat-card {
+
+            width: 100%;
+
+        }
+
         .section-title {
 
             font-size: 32px;
@@ -873,9 +899,21 @@
 
         }
 
+        .competency-card {
+
+            width: 100%;
+
+        }
+
         .work-grid {
 
             grid-template-columns: 1fr;
+
+        }
+
+        .work-card {
+
+            width: 100%;
 
         }
 
@@ -901,15 +939,51 @@
 
     @media (max-width: 480px) {
 
+        * {
+
+            max-width: 100%;
+
+            word-wrap: break-word;
+
+        }
+
+        .container,
+
+        .nav-container,
+
+        .hero,
+
+        .stats,
+
+        .competencies,
+
+        .featured-work,
+
+        footer {
+
+            padding-left: 16px;
+
+            padding-right: 16px;
+
+        }
+
         .logo {
 
-            font-size: 20px;
+            font-size: 18px;
 
         }
 
         h1 {
 
             font-size: 28px;
+
+            word-break: break-word;
+
+        }
+
+        .hero-subtitle {
+
+            font-size: 15px;
 
         }
 
@@ -921,9 +995,23 @@
 
         .competency-card,
 
-        .work-card {
+        .work-card,
 
-            padding: 24px;
+        .stat-card {
+
+            padding: 20px;
+
+            width: 100%;
+
+        }
+
+        .btn {
+
+            padding: 12px 24px;
+
+            font-size: 15px;
+
+            width: 100%;
 
         }
 
