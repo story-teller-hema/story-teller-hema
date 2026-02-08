@@ -185,9 +185,9 @@
 
     .featured-post {
 
-        background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+        background: linear-gradient(135deg, rgba(255, 135, 0, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
 
-        border: 1px solid rgba(255, 107, 53, 0.3);
+        border: 1px solid rgba(255, 135, 0, 0.3);
 
         border-radius: 24px;
 
@@ -205,7 +205,7 @@
 
         transform: translateY(-4px);
 
-        box-shadow: 0 12px 48px rgba(255, 107, 53, 0.3);
+        box-shadow: 0 12px 48px rgba(255, 135, 0, 0.3);
 
     }
 
@@ -215,9 +215,9 @@
 
         padding: 6px 14px;
 
-        background: rgba(255, 107, 53, 0.2);
+        background: rgba(255, 135, 0, 0.2);
 
-        border: 1px solid rgba(255, 107, 53, 0.4);
+        border: 1px solid rgba(255, 135, 0, 0.4);
 
         border-radius: 20px;
 
@@ -225,7 +225,7 @@
 
         font-weight: 600;
 
-        color: var(--accent-light);
+        color: #FF8700;
 
         text-transform: uppercase;
 
@@ -261,7 +261,7 @@
 
     .featured-post h2 a:hover {
 
-        color: var(--accent-light);
+        color: #FF8700;
 
     }
 
@@ -412,6 +412,14 @@
         background: rgba(0, 217, 165, 0.2);
 
         color: var(--success);
+
+    }
+
+    .post-category.strategy {
+
+        background: rgba(255, 107, 53, 0.2);
+
+        color: var(--accent);
 
     }
 
@@ -571,31 +579,31 @@
 ```
 <!-- Featured Post -->
 <article class="featured-post">
-<span class="featured-badge">Featured Post</span>
-<h2><a href="blog-reading-data.html">My Reading Data Story: 529 Books of Insights</a></h2>
+<span class="featured-badge">Featured • Latest Post</span>
+<h2><a href="blog-lando-f1.html">Lando's Championship Season: A Data-Driven Analysis</a></h2>
 <div class="post-meta">
-<span>📚 Personal Analytics</span>
+<span>🏎️ F1 Analytics</span>
 <span>•</span>
-<span>March 2025</span>
+<span>December 27, 2025</span>
 <span>•</span>
-<span>8 min read</span>
+<span>9 min read</span>
 </div>
 <p class="post-excerpt">
 
-            I've tracked every book I've read on Goodreads for years—529 books and counting. What started as simple list-keeping became a fascinating dataset about my evolving tastes, reading velocity, and how life events shape what we choose to read. From Brandon Sanderson marathons to Sally Rooney detours, here's what the data reveals about a decade of reading.
+            After years of "almosts" and "next years," Lando Norris finally did it—he won the 2024-2025 Formula 1 World Championship. As a long-time McLaren fan and data analyst, I couldn't resist breaking down his championship-winning season through the numbers. From consistent podiums to dominant victories, here's what the data reveals about a driver who came into his own.
 </p>
-<a href="blog-reading-data.html" class="read-more">
+<a href="blog-lando-f1.html" class="read-more">
 
-            Read Full Analysis →
+            View F1 Dashboard →
 </a>
 </article>
 <!-- Blog Grid -->
 <div class="blog-grid">
 <article class="blog-card">
-<span class="post-category">Strategy</span>
+<span class="post-category strategy">Strategy</span>
 <h3><a href="blog-digital-share.html">From 6% to 12% Digital Share: The Omnichannel Playbook</a></h3>
 <div class="post-meta">
-<span>September 2025</span>
+<span>November 24, 2025</span>
 <span>•</span>
 <span>12 min read</span>
 </div>
@@ -612,7 +620,7 @@
 <span class="post-category leadership">Leadership</span>
 <h3><a href="blog-martech-pod.html">Building a Martech Pod: Scaling Adobe Analytics at Enterprise Level</a></h3>
 <div class="post-meta">
-<span>October 2025</span>
+<span>July 6, 2025</span>
 <span>•</span>
 <span>10 min read</span>
 </div>
@@ -626,27 +634,10 @@
 </a>
 </article>
 <article class="blog-card">
-<span class="post-category data">F1 Analytics</span>
-<h3><a href="blog-lando-f1.html">Lando's Championship Season: A Data-Driven Analysis</a></h3>
-<div class="post-meta">
-<span>December 2025</span>
-<span>•</span>
-<span>9 min read</span>
-</div>
-<p class="post-excerpt">
-
-                Breaking down Lando Norris's 2024-2025 championship-winning season through race-by-race performance data, qualifying trends, overtake patterns, and strategic decisions. From near-misses to dominant victories—the numbers tell the story of a driver coming into his own.
-</p>
-<a href="blog-lando-f1.html" class="read-more">
-
-                View F1 Dashboard →
-</a>
-</article>
-<article class="blog-card">
 <span class="post-category">Technical Deep-Dive</span>
 <h3><a href="blog-mmm.html">MMM in Practice: Optimizing $50M in QSR Media Spend</a></h3>
 <div class="post-meta">
-<span>December 2025</span>
+<span>March 31, 2025</span>
 <span>•</span>
 <span>15 min read</span>
 </div>
@@ -659,9 +650,26 @@
                 Read Technical Analysis →
 </a>
 </article>
+<article class="blog-card">
+<span class="post-category data">Personal Analytics</span>
+<h3><a href="blog-reading-data.html">My Reading Data Story: 529 Books of Insights</a></h3>
+<div class="post-meta">
+<span>January 5, 2025</span>
+<span>•</span>
+<span>8 min read</span>
+</div>
+<p class="post-excerpt">
+
+                I've tracked every book I've read on Goodreads for years—529 books and counting. What started as simple list-keeping became a fascinating dataset about my evolving tastes, reading velocity, and how life events shape what we choose to read. From Brandon Sanderson marathons to Sally Rooney detours, here's what the data reveals.
+</p>
+<a href="blog-reading-data.html" class="read-more">
+
+                Read Full Analysis →
+</a>
+</article>
 </div>
 <footer>
-<p>Written by <a href="#">Hema Kamineni</a> • Senior Digital Experience Strategist</p>
+<p>Written by <a href="index.html">Hema Kamineni</a> • Senior Digital Experience Strategist</p>
 <p style="margin-top: 8px; font-size: 12px;">Thoughts on Martech, analytics, data-driven decision making, and life</p>
 </footer>
 </div>
