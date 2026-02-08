@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hema Kamineni | Senior Digital Experience Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+        :root {
+
+            --primary: #0A0E27;
+
+            --accent: #FF6B35;
+
+            --accent-light: #FF8C61;
+
+            --success: #00D9A5;
+
+            --purple: #9D4EDD;
+
+            --blue: #3772FF;
+
+            --text: #E8EAF6;
+
+            --text-muted: #9BA3C7;
+
+            --border: rgba(255, 255, 255, 0.1);
+
+        }
+
+```
+
+    * {
+
+        margin: 0;
+
+        padding: 0;
+
+        box-sizing: border-box;
+
+    }
+
+    body {
+
+        font-family: 'Work Sans', sans-serif;
+
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1129 50%, #1a0e2e 100%);
+
+        color: var(--text);
+
+        line-height: 1.6;
+
+        min-height: 100vh;
+
+    }
+
+    body::before {
+
+        content: '';
+
+        position: fixed;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        background-image: 
+
+            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+
+        background-size: 50px 50px;
+
+        z-index: 0;
+
+        pointer-events: none;
+
+    }
+
+    /* Navigation */
+
+    nav {
+
+        position: sticky;
+
+        top: 0;
+
+        background: rgba(10, 14, 39, 0.95);
+
+        backdrop-filter: blur(10px);
+
+        border-bottom: 1px solid var(--border);
+
+        padding: 20px 0;
+
+        z-index: 100;
+
+    }
+
+    .nav-container {
+
+        max-width: 1400px;
+
+        margin: 0 auto;
+
+        padding: 0 40px;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+    }
+
+    .logo {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 24px;
+
+        font-weight: 400;
+
+        color: var(--text);
+
+        text-decoration: none;
+
+        transition: color 0.3s ease;
+
+    }
+
+    .logo:hover {
+
+        color: var(--accent);
+
+    }
+
+    .nav-links {
+
+        display: flex;
+
+        gap: 40px;
+
+        list-style: none;
+
+    }
+
+    .nav-links a {
+
+        color: var(--text-muted);
+
+        text-decoration: none;
+
+        font-weight: 500;
+
+        font-size: 15px;
+
+        transition: color 0.3s ease;
+
+        position: relative;
+
+    }
+
+    .nav-links a:hover {
+
+        color: var(--text);
+
+    }
+
+    .nav-links a::after {
+
+        content: '';
+
+        position: absolute;
+
+        bottom: -4px;
+
+        left: 0;
+
+        width: 0;
+
+        height: 2px;
+
+        background: var(--accent);
+
+        transition: width 0.3s ease;
+
+    }
+
+    .nav-links a:hover::after {
+
+        width: 100%;
+
+    }
+
+    /* Hero Section */
+
+    .hero {
+
+        max-width: 1400px;
+
+        margin: 0 auto;
+
+        padding: 120px 40px 80px;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    .hero-content {
+
+        max-width: 800px;
+
+    }
+
+    .hero-label {
+
+        display: inline-block;
+
+        padding: 6px 14px;
+
+        background: rgba(255, 107, 53, 0.1);
+
+        border: 1px solid rgba(255, 107, 53, 0.3);
+
+        border-radius: 20px;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        color: var(--accent);
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.5px;
+
+        margin-bottom: 24px;
+
+        animation: fadeInUp 0.8s ease-out;
+
+    }
+
+    h1 {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 72px;
+
+        font-weight: 400;
+
+        line-height: 1.1;
+
+        margin-bottom: 32px;
+
+        background: linear-gradient(135deg, #ffffff 0%, var(--accent-light) 100%);
+
+        -webkit-background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+
+        background-clip: text;
+
+        animation: fadeInUp 0.8s ease-out 0.1s both;
+
+    }
+
+    .hero-subtitle {
+
+        font-size: 24px;
+
+        color: var(--text-muted);
+
+        margin-bottom: 40px;
+
+        line-height: 1.6;
+
+        font-weight: 300;
+
+        animation: fadeInUp 0.8s ease-out 0.2s both;
+
+    }
+
+    .cta-buttons {
+
+        display: flex;
+
+        gap: 20px;
+
+        animation: fadeInUp 0.8s ease-out 0.3s both;
+
+    }
+
+    .btn {
+
+        padding: 14px 32px;
+
+        border-radius: 8px;
+
+        font-weight: 600;
+
+        font-size: 16px;
+
+        text-decoration: none;
+
+        transition: all 0.3s ease;
+
+        display: inline-block;
+
+    }
+
+    .btn-primary {
+
+        background: var(--accent);
+
+        color: white;
+
+    }
+
+    .btn-primary:hover {
+
+        background: var(--accent-light);
+
+        transform: translateY(-2px);
+
+        box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+
+    }
+
+    .btn-secondary {
+
+        background: rgba(255, 255, 255, 0.05);
+
+        color: var(--text);
+
+        border: 1px solid var(--border);
+
+    }
+
+    .btn-secondary:hover {
+
+        background: rgba(255, 255, 255, 0.1);
+
+        border-color: var(--accent);
+
+    }
+
+    /* Stats Section */
+
+    .stats {
+
+        max-width: 1400px;
+
+        margin: 0 auto;
+
+        padding: 80px 40px;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    .stats-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+        gap: 30px;
+
+    }
+
+    .stat-card {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 20px;
+
+        padding: 36px;
+
+        transition: all 0.3s ease;
+
+        animation: fadeInUp 0.8s ease-out both;
+
+    }
+
+    .stat-card:nth-child(1) { animation-delay: 0.4s; }
+
+    .stat-card:nth-child(2) { animation-delay: 0.5s; }
+
+    .stat-card:nth-child(3) { animation-delay: 0.6s; }
+
+    .stat-card:nth-child(4) { animation-delay: 0.7s; }
+
+    .stat-card:hover {
+
+        transform: translateY(-4px);
+
+        border-color: var(--accent);
+
+        box-shadow: 0 8px 32px rgba(255, 107, 53, 0.2);
+
+    }
+
+    .stat-number {
+
+        font-size: 48px;
+
+        font-weight: 700;
+
+        color: var(--accent);
+
+        margin-bottom: 12px;
+
+        font-family: 'DM Serif Display', serif;
+
+    }
+
+    .stat-label {
+
+        font-size: 16px;
+
+        color: var(--text-muted);
+
+        line-height: 1.5;
+
+    }
+
+    /* Core Competencies */
+
+    .competencies {
+
+        max-width: 1400px;
+
+        margin: 0 auto;
+
+        padding: 80px 40px;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    .section-header {
+
+        text-align: center;
+
+        margin-bottom: 60px;
+
+    }
+
+    .section-title {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 48px;
+
+        font-weight: 400;
+
+        margin-bottom: 16px;
+
+        background: linear-gradient(135deg, #ffffff 0%, var(--purple) 100%);
+
+        -webkit-background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+
+        background-clip: text;
+
+    }
+
+    .section-subtitle {
+
+        font-size: 18px;
+
+        color: var(--text-muted);
+
+    }
+
+    .competencies-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+        gap: 30px;
+
+    }
+
+    .competency-card {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+
+        padding: 32px;
+
+        transition: all 0.3s ease;
+
+    }
+
+    .competency-card:hover {
+
+        transform: translateY(-4px);
+
+        border-color: var(--purple);
+
+        box-shadow: 0 8px 32px rgba(157, 78, 221, 0.2);
+
+    }
+
+    .competency-icon {
+
+        font-size: 36px;
+
+        margin-bottom: 16px;
+
+    }
+
+    .competency-title {
+
+        font-size: 20px;
+
+        font-weight: 600;
+
+        margin-bottom: 12px;
+
+        color: var(--text);
+
+    }
+
+    .competency-desc {
+
+        font-size: 15px;
+
+        color: var(--text-muted);
+
+        line-height: 1.6;
+
+    }
+
+    /* Featured Work */
+
+    .featured-work {
+
+        max-width: 1400px;
+
+        margin: 0 auto;
+
+        padding: 80px 40px;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    .work-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
+        gap: 30px;
+
+    }
+
+    .work-card {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 20px;
+
+        padding: 40px;
+
+        transition: all 0.3s ease;
+
+        text-decoration: none;
+
+        display: block;
+
+    }
+
+    .work-card:hover {
+
+        transform: translateY(-4px);
+
+        border-color: var(--accent);
+
+        box-shadow: 0 8px 32px rgba(255, 107, 53, 0.2);
+
+    }
+
+    .work-label {
+
+        display: inline-block;
+
+        padding: 4px 12px;
+
+        background: rgba(0, 217, 165, 0.2);
+
+        border-radius: 12px;
+
+        font-size: 11px;
+
+        font-weight: 600;
+
+        color: var(--success);
+
+        text-transform: uppercase;
+
+        margin-bottom: 16px;
+
+    }
+
+    .work-title {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 28px;
+
+        font-weight: 400;
+
+        color: var(--text);
+
+        margin-bottom: 12px;
+
+    }
+
+    .work-desc {
+
+        color: var(--text-muted);
+
+        line-height: 1.6;
+
+    }
+
+    /* Footer */
+
+    footer {
+
+        max-width: 1400px;
+
+        margin: 0 auto;
+
+        padding: 60px 40px 40px;
+
+        border-top: 1px solid var(--border);
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    .footer-content {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+    }
+
+    .footer-links {
+
+        display: flex;
+
+        gap: 30px;
+
+    }
+
+    .footer-links a {
+
+        color: var(--text-muted);
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+        transition: color 0.3s ease;
+
+    }
+
+    .footer-links a:hover {
+
+        color: var(--accent);
+
+    }
+
+    /* Animations */
+
+    @keyframes fadeInUp {
+
+        from {
+
+            opacity: 0;
+
+            transform: translateY(30px);
+
+        }
+
+        to {
+
+            opacity: 1;
+
+            transform: translateY(0);
+
+        }
+
+    }
+
+    /* Responsive */
+
+    @media (max-width: 768px) {
+
+        .nav-container {
+
+            padding: 0 20px;
+
+        }
+
+        .nav-links {
+
+            gap: 20px;
+
+        }
+
+        .hero {
+
+            padding: 80px 20px 60px;
+
+        }
+
+        h1 {
+
+            font-size: 42px;
+
+        }
+
+        .hero-subtitle {
+
+            font-size: 18px;
+
+        }
+
+        .cta-buttons {
+
+            flex-direction: column;
+
+        }
+
+        .stats,
+
+        .competencies,
+
+        .featured-work {
+
+            padding: 60px 20px;
+
+        }
+
+        .section-title {
+
+            font-size: 36px;
+
+        }
+
+        .footer-content {
+
+            flex-direction: column;
+
+            gap: 20px;
+
+            text-align: center;
+
+        }
+
+        .work-grid,
+
+        .competencies-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+    }
+</style>
+
+```
+</head>
+<body>
+<!-- Navigation -->
+<nav>
+<div class="nav-container">
+<a href="index.html" class="logo">Hema Kamineni</a>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="blog.html">Blog</a></li>
+<li><a href="superbowl-insights.html">Data Viz</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+</nav>
+
+```
+<!-- Hero Section -->
+<section class="hero">
+<div class="hero-content">
+<span class="hero-label">Senior Digital Experience Strategist</span>
+<h1>Optimizing digital experiences through data-driven consumer insights</h1>
+<p class="hero-subtitle">
+
+            10+ years transforming how global brands understand and engage customers across restaurant digital platforms. Expert in Adobe Marketing Cloud, behavioral analytics, omnichannel journey optimization, and turning complex data into actionable strategy that drives measurable business growth.
+</p>
+<div class="cta-buttons">
+<a href="blog.html" class="btn btn-primary">Read My Work</a>
+<a href="contact.html" class="btn btn-secondary">Get in Touch</a>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="stats">
+<div class="stats-grid">
+<div class="stat-card">
+<div class="stat-number">2x</div>
+<div class="stat-label">Digital revenue share growth (6% → 12%) across global QSR brand</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">+300bps</div>
+<div class="stat-label">Conversion lift in North America through personalization & experimentation</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">$13 → $15</div>
+<div class="stat-label">AOV growth via strategic upsell placements and bundle optimization</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">50+</div>
+<div class="stat-label">Concurrent A/B tests managed without production incidents</div>
+</div>
+</div>
+</section>
+<!-- Core Competencies -->
+<section class="competencies">
+<div class="section-header">
+<h2 class="section-title">Core Competencies</h2>
+<p class="section-subtitle">Strategic and hands-on leader who balances roadmap direction with day-to-day execution</p>
+</div>
+<div class="competencies-grid">
+<div class="competency-card">
+<div class="competency-icon">📊</div>
+<h3 class="competency-title">Adobe Marketing Cloud</h3>
+<p class="competency-desc">Expert in Adobe Analytics, Customer Journey Analytics, and Target. Strategic partner on RTCDP, AEP, and AJO implementations.</p>
+</div>
+<div class="competency-card">
+<div class="competency-icon">🎯</div>
+<h3 class="competency-title">Personalization & Testing</h3>
+<p class="competency-desc">Real-time personalization, recommendation strategies, and experimentation programs at enterprise scale across app, web, and kiosk.</p>
+</div>
+<div class="competency-card">
+<div class="competency-icon">🔄</div>
+<h3 class="competency-title">Omnichannel Activation</h3>
+<p class="competency-desc">Guest journey orchestration across digital touchpoints, CRM targeting, media optimization, and loyalty program integration.</p>
+</div>
+<div class="competency-card">
+<div class="competency-icon">👥</div>
+<h3 class="competency-title">Team Leadership</h3>
+<p class="competency-desc">Building high-performing teams, managing 2 FTE + 5 consultants, agile delivery, and vendor partnership management.</p>
+</div>
+<div class="competency-card">
+<div class="competency-icon">⚙️</div>
+<h3 class="competency-title">Operating Models</h3>
+<p class="competency-desc">Martech governance, consent frameworks, data quality, platform health monitoring, and cross-functional alignment.</p>
+</div>
+<div class="competency-card">
+<div class="competency-icon">📈</div>
+<h3 class="competency-title">Strategic Analytics</h3>
+<p class="competency-desc">KPI frameworks, attribution modeling, executive reporting, and translating data insights into business strategy.</p>
+</div>
+</div>
+</section>
+<!-- Featured Work -->
+<section class="featured-work">
+<div class="section-header">
+<h2 class="section-title">Featured Work</h2>
+<p class="section-subtitle">Data analytics meets real-world applications</p>
+</div>
+<div class="work-grid">
+<a href="superbowl-insights.html" class="work-card">
+<span class="work-label">Data Visualization</span>
+<h3 class="work-title">Super Bowl 2025 QSR Ordering Intelligence</h3>
+<p class="work-desc">Real-time consumer behavior analysis across 2.3M digital orders during Patriots vs Seahawks, powered by Adobe Analytics.</p>
+</a>
+<a href="blog-lando-f1.html" class="work-card">
+<span class="work-label">F1 Analytics</span>
+<h3 class="work-title">Lando's Championship Season Analysis</h3>
+<p class="work-desc">Data-driven breakdown of Lando Norris's 2024-2025 championship-winning F1 season with performance visualizations.</p>
+</a>
+<a href="blog-digital-share.html" class="work-card">
+<span class="work-label">Case Study</span>
+<h3 class="work-title">6% to 12% Digital Share Growth</h3>
+<p class="work-desc">18-month playbook for doubling digital revenue through personalization, experimentation, and omnichannel optimization.</p>
+</a>
+</div>
+</section>
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<p style="color: var(--text-muted);">© 2026 Hema Kamineni. Built with data-driven design principles.</p>
+<div class="footer-links">
+<a href="https://www.linkedin.com/in/hema-kamineni" target="_blank">LinkedIn</a>
+<a href="contact.html">Contact</a>
+<a href="blog.html">Blog</a>
+</div>
+</div>
+</footer>
+
+```
+</body>
+</html>
+ 
