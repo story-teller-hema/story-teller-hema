@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | Hema Kamineni - Martech & Analytics Insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+        :root {
+
+            --primary: #0A0E27;
+
+            --secondary: #1a1f3a;
+
+            --accent: #FF6B35;
+
+            --accent-light: #FF8C61;
+
+            --success: #00D9A5;
+
+            --purple: #9D4EDD;
+
+            --blue: #3772FF;
+
+            --text: #E8EAF6;
+
+            --text-muted: #9BA3C7;
+
+            --border: rgba(255, 255, 255, 0.1);
+
+        }
+
+```
+
+    * {
+
+        margin: 0;
+
+        padding: 0;
+
+        box-sizing: border-box;
+
+    }
+
+    body {
+
+        font-family: 'Work Sans', sans-serif;
+
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1129 50%, #1a0e2e 100%);
+
+        color: var(--text);
+
+        line-height: 1.6;
+
+        min-height: 100vh;
+
+    }
+
+    body::before {
+
+        content: '';
+
+        position: fixed;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        background-image: 
+
+            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+
+        background-size: 50px 50px;
+
+        z-index: 0;
+
+        pointer-events: none;
+
+    }
+
+    .container {
+
+        max-width: 1200px;
+
+        margin: 0 auto;
+
+        padding: 40px 20px;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    /* Header */
+
+    header {
+
+        margin-bottom: 60px;
+
+        animation: fadeInUp 0.8s ease-out;
+
+    }
+
+    .header-meta {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 20px;
+
+        margin-bottom: 16px;
+
+    }
+
+    .breadcrumb {
+
+        font-size: 14px;
+
+        color: var(--text-muted);
+
+    }
+
+    .breadcrumb a {
+
+        color: var(--accent);
+
+        text-decoration: none;
+
+        transition: color 0.3s ease;
+
+    }
+
+    .breadcrumb a:hover {
+
+        color: var(--accent-light);
+
+    }
+
+    h1 {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 56px;
+
+        font-weight: 400;
+
+        line-height: 1.1;
+
+        margin-bottom: 20px;
+
+        background: linear-gradient(135deg, #ffffff 0%, var(--accent-light) 100%);
+
+        -webkit-background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+
+        background-clip: text;
+
+    }
+
+    .subtitle {
+
+        font-size: 20px;
+
+        color: var(--text-muted);
+
+        max-width: 700px;
+
+        font-weight: 300;
+
+    }
+
+    /* Featured Post */
+
+    .featured-post {
+
+        background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+
+        border: 1px solid rgba(255, 107, 53, 0.3);
+
+        border-radius: 24px;
+
+        padding: 48px;
+
+        margin-bottom: 60px;
+
+        animation: fadeInUp 0.8s ease-out 0.2s both;
+
+        transition: all 0.3s ease;
+
+    }
+
+    .featured-post:hover {
+
+        transform: translateY(-4px);
+
+        box-shadow: 0 12px 48px rgba(255, 107, 53, 0.3);
+
+    }
+
+    .featured-badge {
+
+        display: inline-block;
+
+        padding: 6px 14px;
+
+        background: rgba(255, 107, 53, 0.2);
+
+        border: 1px solid rgba(255, 107, 53, 0.4);
+
+        border-radius: 20px;
+
+        font-size: 12px;
+
+        font-weight: 600;
+
+        color: var(--accent-light);
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.5px;
+
+        margin-bottom: 20px;
+
+    }
+
+    .featured-post h2 {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 36px;
+
+        font-weight: 400;
+
+        margin-bottom: 16px;
+
+        color: var(--text);
+
+    }
+
+    .featured-post h2 a {
+
+        color: var(--text);
+
+        text-decoration: none;
+
+        transition: color 0.3s ease;
+
+    }
+
+    .featured-post h2 a:hover {
+
+        color: var(--accent-light);
+
+    }
+
+    .post-meta {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 20px;
+
+        margin-bottom: 20px;
+
+        font-size: 14px;
+
+        color: var(--text-muted);
+
+    }
+
+    .post-excerpt {
+
+        font-size: 16px;
+
+        line-height: 1.7;
+
+        color: var(--text-muted);
+
+        margin-bottom: 24px;
+
+    }
+
+    .read-more {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        padding: 12px 24px;
+
+        background: var(--accent);
+
+        color: white;
+
+        text-decoration: none;
+
+        border-radius: 8px;
+
+        font-weight: 600;
+
+        transition: all 0.3s ease;
+
+    }
+
+    .read-more:hover {
+
+        background: var(--accent-light);
+
+        transform: translateX(4px);
+
+    }
+
+    /* Blog Grid */
+
+    .blog-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+
+        gap: 30px;
+
+        margin-bottom: 60px;
+
+    }
+
+    .blog-card {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 20px;
+
+        padding: 36px;
+
+        backdrop-filter: blur(10px);
+
+        transition: all 0.3s ease;
+
+        animation: fadeInUp 0.8s ease-out both;
+
+    }
+
+    .blog-card:nth-child(1) { animation-delay: 0.3s; }
+
+    .blog-card:nth-child(2) { animation-delay: 0.4s; }
+
+    .blog-card:nth-child(3) { animation-delay: 0.5s; }
+
+    .blog-card:nth-child(4) { animation-delay: 0.6s; }
+
+    .blog-card:hover {
+
+        transform: translateY(-4px);
+
+        border-color: var(--accent);
+
+        box-shadow: 0 8px 32px rgba(255, 107, 53, 0.2);
+
+    }
+
+    .post-category {
+
+        display: inline-block;
+
+        padding: 4px 12px;
+
+        background: rgba(157, 78, 221, 0.2);
+
+        border-radius: 12px;
+
+        font-size: 11px;
+
+        font-weight: 600;
+
+        color: var(--purple);
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.5px;
+
+        margin-bottom: 16px;
+
+    }
+
+    .post-category.data {
+
+        background: rgba(55, 114, 255, 0.2);
+
+        color: var(--blue);
+
+    }
+
+    .post-category.leadership {
+
+        background: rgba(0, 217, 165, 0.2);
+
+        color: var(--success);
+
+    }
+
+    .blog-card h3 {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 26px;
+
+        font-weight: 400;
+
+        margin-bottom: 12px;
+
+        line-height: 1.3;
+
+    }
+
+    .blog-card h3 a {
+
+        color: var(--text);
+
+        text-decoration: none;
+
+        transition: color 0.3s ease;
+
+    }
+
+    .blog-card h3 a:hover {
+
+        color: var(--accent-light);
+
+    }
+
+    .blog-card .post-excerpt {
+
+        font-size: 15px;
+
+        margin-bottom: 20px;
+
+    }
+
+    .blog-card .read-more {
+
+        font-size: 14px;
+
+        padding: 10px 20px;
+
+    }
+
+    /* Footer */
+
+    footer {
+
+        margin-top: 80px;
+
+        padding-top: 40px;
+
+        border-top: 1px solid var(--border);
+
+        text-align: center;
+
+        color: var(--text-muted);
+
+        font-size: 14px;
+
+    }
+
+    footer a {
+
+        color: var(--accent);
+
+        text-decoration: none;
+
+        transition: color 0.3s ease;
+
+    }
+
+    footer a:hover {
+
+        color: var(--accent-light);
+
+    }
+
+    /* Animations */
+
+    @keyframes fadeInUp {
+
+        from {
+
+            opacity: 0;
+
+            transform: translateY(30px);
+
+        }
+
+        to {
+
+            opacity: 1;
+
+            transform: translateY(0);
+
+        }
+
+    }
+
+    /* Responsive */
+
+    @media (max-width: 768px) {
+
+        h1 {
+
+            font-size: 36px;
+
+        }
+
+        .featured-post {
+
+            padding: 32px;
+
+        }
+
+        .featured-post h2 {
+
+            font-size: 28px;
+
+        }
+
+        .blog-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+        .blog-card {
+
+            padding: 24px;
+
+        }
+
+    }
+</style>
+
+```
+</head>
+<body>
+<div class="container">
+<header>
+<div class="header-meta">
+<div class="breadcrumb">
+<a href="index.html">Home</a> / Blog
+</div>
+</div>
+<h1>Insights & Analysis</h1>
+<p class="subtitle">Where data analytics meets real life - from QSR digital transformation to F1 performance trends and personal reading patterns.</p>
+</header>
+
+```
+<!-- Featured Post -->
+<article class="featured-post">
+<span class="featured-badge">Featured Post</span>
+<h2><a href="blog-reading-data.html">My Reading Data Story: 529 Books of Insights</a></h2>
+<div class="post-meta">
+<span>📚 Personal Analytics</span>
+<span>•</span>
+<span>March 2025</span>
+<span>•</span>
+<span>8 min read</span>
+</div>
+<p class="post-excerpt">
+
+            I've tracked every book I've read on Goodreads for years—529 books and counting. What started as simple list-keeping became a fascinating dataset about my evolving tastes, reading velocity, and how life events shape what we choose to read. From Brandon Sanderson marathons to Sally Rooney detours, here's what the data reveals about a decade of reading.
+</p>
+<a href="blog-reading-data.html" class="read-more">
+
+            Read Full Analysis →
+</a>
+</article>
+<!-- Blog Grid -->
+<div class="blog-grid">
+<article class="blog-card">
+<span class="post-category">Strategy</span>
+<h3><a href="blog-digital-share.html">From 6% to 12% Digital Share: The Omnichannel Playbook</a></h3>
+<div class="post-meta">
+<span>September 2025</span>
+<span>•</span>
+<span>12 min read</span>
+</div>
+<p class="post-excerpt">
+
+                How we doubled digital revenue share in 18 months through strategic personalization, offer sequencing, and ruthless experimentation. A detailed case study with real metrics, what worked, what failed, and lessons for other QSR brands navigating digital transformation.
+</p>
+<a href="blog-digital-share.html" class="read-more">
+
+                Read Case Study →
+</a>
+</article>
+<article class="blog-card">
+<span class="post-category leadership">Leadership</span>
+<h3><a href="blog-martech-pod.html">Building a Martech Pod: Scaling Adobe Analytics at Enterprise Level</a></h3>
+<div class="post-meta">
+<span>October 2025</span>
+<span>•</span>
+<span>10 min read</span>
+</div>
+<p class="post-excerpt">
+
+                Managing 2 FTE and 5 embedded consultants across three continents taught me everything about pod structure, agile ceremonies that work, vendor partnerships, and talent development. Here's the operating model that powers analytics at scale.
+</p>
+<a href="blog-martech-pod.html" class="read-more">
+
+                Read Leadership Guide →
+</a>
+</article>
+<article class="blog-card">
+<span class="post-category data">F1 Analytics</span>
+<h3><a href="blog-lando-f1.html">Lando's Championship Season: A Data-Driven Analysis</a></h3>
+<div class="post-meta">
+<span>December 2025</span>
+<span>•</span>
+<span>9 min read</span>
+</div>
+<p class="post-excerpt">
+
+                Breaking down Lando Norris's 2024-2025 championship-winning season through race-by-race performance data, qualifying trends, overtake patterns, and strategic decisions. From near-misses to dominant victories—the numbers tell the story of a driver coming into his own.
+</p>
+<a href="blog-lando-f1.html" class="read-more">
+
+                View F1 Dashboard →
+</a>
+</article>
+<article class="blog-card">
+<span class="post-category">Technical Deep-Dive</span>
+<h3><a href="blog-mmm.html">MMM in Practice: Optimizing $50M in QSR Media Spend</a></h3>
+<div class="post-meta">
+<span>December 2025</span>
+<span>•</span>
+<span>15 min read</span>
+</div>
+<p class="post-excerpt">
+
+                Marketing Mix Modeling sounds theoretical until you're responsible for allocating real budgets. Here's how I'd approach optimizing a $50M media budget across TV, social, search, and digital channels—with real QSR constraints, lag effects, and incrementality challenges.
+</p>
+<a href="blog-mmm.html" class="read-more">
+
+                Read Technical Analysis →
+</a>
+</article>
+</div>
+<footer>
+<p>Written by <a href="#">Hema Kamineni</a> • Senior Digital Experience Strategist</p>
+<p style="margin-top: 8px; font-size: 12px;">Thoughts on Martech, analytics, data-driven decision making, and life</p>
+</footer>
+</div>
+
+```
+</body>
+</html>
+ 
