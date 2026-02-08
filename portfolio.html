@@ -111,6 +111,8 @@
 
         overflow-x: hidden;
 
+        overflow-y: visible;
+
     }
 
     .nav-container {
@@ -797,9 +799,9 @@
 
             display: none;
 
-            position: absolute;
+            position: fixed;
 
-            top: 100%;
+            top: 65px;
 
             left: 0;
 
@@ -811,17 +813,23 @@
 
             gap: 0;
 
-            padding: 20px 16px;
+            padding: 0;
 
             border-top: 1px solid var(--border);
 
             width: 100%;
+
+            z-index: 9999;
+
+            pointer-events: auto;
 
         }
 
         .nav-links.active {
 
             display: flex;
+
+            pointer-events: auto;
 
         }
 
@@ -831,15 +839,41 @@
 
             width: 100%;
 
+            list-style: none;
+
+            margin: 0;
+
+            pointer-events: auto;
+
         }
 
         .nav-links a {
 
             display: block;
 
-            padding: 16px 0;
+            padding: 20px 16px;
 
             width: 100%;
+
+            color: var(--text);
+
+            text-decoration: none;
+
+            font-weight: 500;
+
+            font-size: 18px;
+
+            transition: background 0.2s ease;
+
+            pointer-events: auto;
+
+            cursor: pointer;
+
+        }
+
+        .nav-links a:active {
+
+            background: rgba(255, 107, 53, 0.1);
 
         }
 
@@ -1203,43 +1237,23 @@
 
         const navLinks = document.getElementById('navLinks');
 
-        navLinks.classList.toggle('active');
+        console.log('Toggle clicked');
+
+        if (navLinks.style.display === 'flex') {
+
+            navLinks.style.display = 'none';
+
+            console.log('Hiding menu');
+
+        } else {
+
+            navLinks.style.display = 'flex';
+
+            console.log('Showing menu');
+
+        }
 
     }
-
-    // Close menu when clicking a link
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-
-            link.addEventListener('click', () => {
-
-                document.getElementById('navLinks').classList.remove('active');
-
-            });
-
-        });
-
-        // Close menu when clicking outside
-
-        document.addEventListener('click', (e) => {
-
-            const nav = document.querySelector('nav');
-
-            const navLinks = document.getElementById('navLinks');
-
-            const toggle = document.querySelector('.mobile-menu-toggle');
-
-            if (!nav.contains(e.target) || (e.target !== toggle && !toggle.contains(e.target) && !navLinks.contains(e.target))) {
-
-                navLinks.classList.remove('active');
-
-            }
-
-        });
-
-    });
 </script>
 
 ```
