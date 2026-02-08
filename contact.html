@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Hema Kamineni</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+        :root{--primary:#0A0E27;--accent:#FF6B35;--text:#E8EAF6;--text-muted:#9BA3C7;--border:rgba(255,255,255,0.1);}
+
+        *{margin:0;padding:0;box-sizing:border-box;}
+
+        body{font-family:'Work Sans',sans-serif;background:linear-gradient(135deg,var(--primary) 0%,#0d1129 50%,#1a0e2e 100%);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+
+        body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:50px 50px;z-index:0;pointer-events:none;}
+
+        .container{max-width:600px;position:relative;z-index:1;text-align:center;}
+
+        h1{font-family:'DM Serif Display',serif;font-size:56px;font-weight:400;margin-bottom:24px;background:linear-gradient(135deg,#ffffff 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+        p{font-size:20px;color:var(--text-muted);margin-bottom:48px;line-height:1.6;}
+
+        .contact-links{display:flex;flex-direction:column;gap:24px;margin-bottom:48px;}
+
+        .contact-link{display:flex;align-items:center;justify-content:center;gap:16px;padding:24px 32px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;text-decoration:none;color:var(--text);font-size:18px;font-weight:500;transition:all 0.3s ease;}
+
+        .contact-link:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 8px 32px rgba(255,107,53,0.2);}
+
+        .contact-icon{font-size:28px;}
+
+        .back-link{display:inline-block;margin-top:32px;color:var(--accent);text-decoration:none;font-weight:600;transition:color 0.3s ease;}
+
+        .back-link:hover{color:#FF8C61;}
+
+        @media (max-width:768px){h1{font-size:36px;}p{font-size:18px;}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Let's Connect</h1>
+<p>Interested in discussing Martech strategy, Adobe Analytics implementations, or digital optimization? I'd love to hear from you.</p>
+<div class="contact-links">
+<a href="mailto:hema.kamineni@example.com" class="contact-link">
+<span class="contact-icon">✉️</span>
+<span>hema.kamineni@example.com</span>
+</a>
+<a href="https://www.linkedin.com/in/hema-kamineni" target="_blank" class="contact-link">
+<span class="contact-icon">💼</span>
+<span>linkedin.com/in/hema-kamineni</span>
+</a>
+</div>
+<a href="index.html" class="back-link">← Back to Home</a>
+</div>
+</body>
+</html>
+ 
