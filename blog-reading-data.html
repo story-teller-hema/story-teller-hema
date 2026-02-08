@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Reading Data Story: 529 Books of Insights | Hema Kamineni</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+        :root {
+
+            --primary: #0A0E27;
+
+            --secondary: #1a1f3a;
+
+            --accent: #FF6B35;
+
+            --accent-light: #FF8C61;
+
+            --success: #00D9A5;
+
+            --purple: #9D4EDD;
+
+            --blue: #3772FF;
+
+            --text: #E8EAF6;
+
+            --text-muted: #9BA3C7;
+
+            --border: rgba(255, 255, 255, 0.1);
+
+        }
+
+```
+
+    * {
+
+        margin: 0;
+
+        padding: 0;
+
+        box-sizing: border-box;
+
+    }
+
+    body {
+
+        font-family: 'Work Sans', sans-serif;
+
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1129 50%, #1a0e2e 100%);
+
+        color: var(--text);
+
+        line-height: 1.7;
+
+        min-height: 100vh;
+
+    }
+
+    body::before {
+
+        content: '';
+
+        position: fixed;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        background-image: 
+
+            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+
+        background-size: 50px 50px;
+
+        z-index: 0;
+
+        pointer-events: none;
+
+    }
+
+    article {
+
+        max-width: 800px;
+
+        margin: 0 auto;
+
+        padding: 60px 20px;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    .breadcrumb {
+
+        font-size: 14px;
+
+        color: var(--text-muted);
+
+        margin-bottom: 32px;
+
+    }
+
+    .breadcrumb a {
+
+        color: var(--accent);
+
+        text-decoration: none;
+
+        transition: color 0.3s ease;
+
+    }
+
+    .breadcrumb a:hover {
+
+        color: var(--accent-light);
+
+    }
+
+    .post-header {
+
+        margin-bottom: 48px;
+
+        animation: fadeInUp 0.8s ease-out;
+
+    }
+
+    .post-category {
+
+        display: inline-block;
+
+        padding: 6px 14px;
+
+        background: rgba(255, 107, 53, 0.2);
+
+        border: 1px solid rgba(255, 107, 53, 0.4);
+
+        border-radius: 20px;
+
+        font-size: 12px;
+
+        font-weight: 600;
+
+        color: var(--accent-light);
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.5px;
+
+        margin-bottom: 20px;
+
+    }
+
+    h1 {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 48px;
+
+        font-weight: 400;
+
+        line-height: 1.2;
+
+        margin-bottom: 24px;
+
+        background: linear-gradient(135deg, #ffffff 0%, var(--accent-light) 100%);
+
+        -webkit-background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+
+        background-clip: text;
+
+    }
+
+    .post-meta {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 20px;
+
+        margin-bottom: 32px;
+
+        font-size: 15px;
+
+        color: var(--text-muted);
+
+    }
+
+    .post-intro {
+
+        font-size: 20px;
+
+        line-height: 1.6;
+
+        color: var(--text);
+
+        margin-bottom: 48px;
+
+        padding: 24px;
+
+        background: rgba(255, 107, 53, 0.05);
+
+        border-left: 4px solid var(--accent);
+
+        border-radius: 8px;
+
+    }
+
+    .content {
+
+        animation: fadeInUp 0.8s ease-out 0.2s both;
+
+    }
+
+    h2 {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 32px;
+
+        font-weight: 400;
+
+        margin: 48px 0 24px;
+
+        color: var(--text);
+
+    }
+
+    h3 {
+
+        font-size: 22px;
+
+        font-weight: 600;
+
+        margin: 36px 0 16px;
+
+        color: var(--text);
+
+    }
+
+    p {
+
+        margin-bottom: 24px;
+
+        font-size: 17px;
+
+        line-height: 1.8;
+
+    }
+
+    .stats-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+
+        gap: 20px;
+
+        margin: 48px 0;
+
+    }
+
+    .stat-box {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+
+        padding: 24px;
+
+        text-align: center;
+
+        transition: all 0.3s ease;
+
+    }
+
+    .stat-box:hover {
+
+        transform: translateY(-4px);
+
+        border-color: var(--accent);
+
+    }
+
+    .stat-number {
+
+        font-size: 36px;
+
+        font-weight: 700;
+
+        color: var(--accent);
+
+        margin-bottom: 8px;
+
+    }
+
+    .stat-label {
+
+        font-size: 13px;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1px;
+
+        color: var(--text-muted);
+
+        font-weight: 600;
+
+    }
+
+    .chart-container {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 20px;
+
+        padding: 32px;
+
+        margin: 48px 0;
+
+        backdrop-filter: blur(10px);
+
+    }
+
+    .chart-title {
+
+        font-size: 20px;
+
+        font-weight: 600;
+
+        margin-bottom: 24px;
+
+        color: var(--text);
+
+    }
+
+    .chart-wrapper {
+
+        position: relative;
+
+        height: 350px;
+
+    }
+
+    .book-list {
+
+        list-style: none;
+
+        margin: 24px 0;
+
+    }
+
+    .book-list li {
+
+        padding: 16px;
+
+        background: rgba(255, 255, 255, 0.02);
+
+        border-left: 3px solid var(--accent);
+
+        margin-bottom: 12px;
+
+        border-radius: 8px;
+
+    }
+
+    .book-title {
+
+        font-weight: 600;
+
+        color: var(--text);
+
+        margin-bottom: 4px;
+
+    }
+
+    .book-author {
+
+        font-size: 14px;
+
+        color: var(--text-muted);
+
+    }
+
+    .insight-box {
+
+        background: linear-gradient(135deg, rgba(157, 78, 221, 0.1) 0%, rgba(55, 114, 255, 0.1) 100%);
+
+        border: 1px solid rgba(157, 78, 221, 0.3);
+
+        border-radius: 16px;
+
+        padding: 32px;
+
+        margin: 48px 0;
+
+    }
+
+    .insight-box h3 {
+
+        margin-top: 0;
+
+        color: var(--purple);
+
+    }
+
+    blockquote {
+
+        border-left: 4px solid var(--purple);
+
+        padding-left: 24px;
+
+        margin: 32px 0;
+
+        font-style: italic;
+
+        color: var(--text-muted);
+
+        font-size: 18px;
+
+    }
+
+    .cta-box {
+
+        background: var(--accent);
+
+        padding: 32px;
+
+        border-radius: 16px;
+
+        text-align: center;
+
+        margin: 60px 0;
+
+    }
+
+    .cta-box h3 {
+
+        color: white;
+
+        margin-top: 0;
+
+        margin-bottom: 16px;
+
+    }
+
+    .cta-box p {
+
+        color: rgba(255, 255, 255, 0.9);
+
+        margin-bottom: 24px;
+
+    }
+
+    .cta-button {
+
+        display: inline-block;
+
+        padding: 12px 32px;
+
+        background: white;
+
+        color: var(--accent);
+
+        text-decoration: none;
+
+        border-radius: 8px;
+
+        font-weight: 600;
+
+        transition: all 0.3s ease;
+
+    }
+
+    .cta-button:hover {
+
+        transform: scale(1.05);
+
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+
+    }
+
+    footer {
+
+        margin-top: 80px;
+
+        padding-top: 40px;
+
+        border-top: 1px solid var(--border);
+
+        text-align: center;
+
+        color: var(--text-muted);
+
+        font-size: 14px;
+
+    }
+
+    footer a {
+
+        color: var(--accent);
+
+        text-decoration: none;
+
+        transition: color 0.3s ease;
+
+    }
+
+    footer a:hover {
+
+        color: var(--accent-light);
+
+    }
+
+    @keyframes fadeInUp {
+
+        from {
+
+            opacity: 0;
+
+            transform: translateY(30px);
+
+        }
+
+        to {
+
+            opacity: 1;
+
+            transform: translateY(0);
+
+        }
+
+    }
+
+    @media (max-width: 768px) {
+
+        h1 {
+
+            font-size: 32px;
+
+        }
+
+        h2 {
+
+            font-size: 26px;
+
+        }
+
+        .stats-grid {
+
+            grid-template-columns: repeat(2, 1fr);
+
+        }
+
+        .chart-wrapper {
+
+            height: 300px;
+
+        }
+
+    }
+</style>
+
+```
+</head>
+<body>
+<article>
+<div class="breadcrumb">
+<a href="index.html">Home</a> / <a href="blog.html">Blog</a> / Reading Data Story
+</div>
+
+```
+<header class="post-header">
+<span class="post-category">📚 Personal Analytics</span>
+<h1>My Reading Data Story: 529 Books of Insights</h1>
+<div class="post-meta">
+<span>March 2025</span>
+<span>•</span>
+<span>8 min read</span>
+<span>•</span>
+<span>Hema Kamineni</span>
+</div>
+</header>
+<div class="post-intro">
+
+        I've been tracking every book I read on Goodreads for years. What started as simple list-keeping has become a fascinating dataset about evolving tastes, reading velocity, and how life shapes what we choose to read. As someone who analyzes consumer behavior patterns professionally, turning the lens on my own reading habits revealed surprising insights.
+</div>
+<div class="content">
+<div class="stats-grid">
+<div class="stat-box">
+<div class="stat-number">529</div>
+<div class="stat-label">Total Books</div>
+</div>
+<div class="stat-box">
+<div class="stat-number">204</div>
+<div class="stat-label">Books Read</div>
+</div>
+<div class="stat-box">
+<div class="stat-number">3.58</div>
+<div class="stat-label">Avg Rating</div>
+</div>
+<div class="stat-box">
+<div class="stat-number">22</div>
+<div class="stat-label">Favorites</div>
+</div>
+</div>
+<h2>The Fantasy Dominance</h2>
+<p>
+
+            One pattern emerges immediately: I'm a fantasy reader through and through. Brandon Sanderson's Mistborn series, Pierce Brown's Red Rising saga, Patrick Rothfuss's Name of the Wind—these aren't just books I've read, they're worlds I've inhabited. My favorites shelf tells the story: epic fantasy series dominate, with occasional detours into literary fiction and sci-fi.
+</p>
+<div class="chart-container">
+<h3 class="chart-title">Genre Distribution Across 204 Read Books</h3>
+<div class="chart-wrapper">
+<canvas id="genreChart"></canvas>
+</div>
+</div>
+<p>
+
+            What's interesting from an analytics perspective is the "binge pattern." When I discover an author I love, I don't just read one book—I consume their entire bibliography. Brandon Sanderson's Cosmere universe, Joe Abercrombie's First Law books, the complete Red Rising series. This mirrors consumer behavior I see in QSR digital: once someone finds their preferred ordering pattern, they repeat it obsessively.
+</p>
+<h2>Reading Velocity & Life Patterns</h2>
+<p>
+
+            My reading rate isn't consistent—it tracks directly with stress levels and major life events. High-activity work periods correlate with comfort rereads (hello again, Mistborn). Vacation periods show experimentation with new genres. The pandemic years? A massive surge in consumption as books became the primary escape.
+</p>
+<div class="chart-container">
+<h3 class="chart-title">Books Read Per Month (Last 3 Years)</h3>
+<div class="chart-wrapper">
+<canvas id="velocityChart"></canvas>
+</div>
+</div>
+<div class="insight-box">
+<h3>🧠 Analytics Insight</h3>
+<p>
+
+                Just like how QSR ordering patterns show weekly and seasonal cycles, my reading data reveals clear patterns: Fiction reading peaks in winter months (comfort reading season), while summer shows more diversity and experimentation. This mirrors how customers behave with restaurant menu exploration—comfort items during stressful times, adventure during leisure periods.
+</p>
+</div>
+<h2>The Sanderson Effect</h2>
+<p>
+
+            Let's talk about author loyalty. Brandon Sanderson appears multiple times in my favorites, and his books have an average page count of 500+. That's not casual reading—that's commitment. But here's what the data shows: high page counts don't correlate with low ratings for me. In fact, my 5-star reviews skew toward longer books. I'm not a quick-read person; I'm an immersion person.
+</p>
+<div class="chart-container">
+<h3 class="chart-title">Page Count vs. My Rating</h3>
+<div class="chart-wrapper">
+<canvas id="pageCountChart"></canvas>
+</div>
+</div>
+<p>
+
+            This has implications for how I think about user experience design. Conventional wisdom says "shorter is better"—reduce friction, minimize steps, get to conversion fast. But my reading data suggests something more nuanced: the right people will engage deeply with rich, complex experiences if the quality is there. It's not about shortening the journey; it's about making the journey worth taking.
+</p>
+<h2>Favorite Authors (By Appearances)</h2>
+<ul class="book-list">
+<li>
+<div class="book-title">Brandon Sanderson</div>
+<div class="book-author">11 books • Epic Fantasy • Mistborn, Stormlight Archive</div>
+</li>
+<li>
+<div class="book-title">Pierce Brown</div>
+<div class="book-author">6 books • Sci-Fi/Fantasy • Red Rising Saga</div>
+</li>
+<li>
+<div class="book-title">Joe Abercrombie</div>
+<div class="book-author">5 books • Grimdark Fantasy • First Law Series</div>
+</li>
+<li>
+<div class="book-title">Patrick Rothfuss</div>
+<div class="book-author">3 books • Fantasy • Kingkiller Chronicle</div>
+</li>
+<li>
+<div class="book-title">Gabrielle Zevin</div>
+<div class="book-author">2 books • Literary Fiction • Tomorrow x3</div>
+</li>
+</ul>
+<h2>The Outliers</h2>
+<p>
+
+            Not everything is fantasy. "Tomorrow, and Tomorrow, and Tomorrow" by Gabrielle Zevin sits prominently in my favorites—a literary fiction novel about friendship, creativity, and video games. "The Unbearable Lightness of Being" by Milan Kundera. "In the Dream House" by Carmen Maria Machado. These outliers matter because they show I'm not in a complete filter bubble.
+</p>
+<p>
+
+            In Martech terms, these are the "discovery moments"—when the recommendation engine surfaces something unexpected that resonates. They're rare, but high-impact. They expand the universe of what's possible and prevent the echo chamber effect that happens with pure collaborative filtering.
+</p>
+<h2>What This Teaches Me About Data</h2>
+<p>
+
+            Analyzing my own reading habits reinforces lessons I apply professionally:
+</p>
+<ul class="book-list">
+<li>
+<div class="book-title">Patterns Are Personal</div>
+<div class="book-author">What looks like "average behavior" in aggregate masks deeply individual preferences. My fantasy obsession would be lost in averaged genre data.</div>
+</li>
+<li>
+<div class="book-title">Context Matters</div>
+<div class="book-author">Reading velocity correlates with life events. Order frequency correlates with customer life stage. You can't interpret metrics without understanding context.</div>
+</li>
+<li>
+<div class="book-title">Loyalty Is Earned Through Quality</div>
+<div class="book-author">I'll read anything Brandon Sanderson writes because he's never disappointed me. Same with brand loyalty—consistency builds trust, trust builds retention.</div>
+</li>
+<li>
+<div class="book-title">Discovery Requires Risk</div>
+<div class="book-author">My favorite outlier books came from recommendations that seemed "off-profile." Sometimes the algorithm needs to take calculated risks.</div>
+</li>
+</ul>
+<div class="insight-box">
+<h3>💡 The Meta-Insight</h3>
+<p>
+
+                The most interesting thing about analyzing my reading data isn't the specific patterns—it's the reminder that behind every data point in my professional dashboards is a real person with complex, context-dependent preferences. When I see "204 completed orders" in a customer profile, I'm seeing someone as specific and idiosyncratic as me with my 204 read books.
+</p>
+</div>
+<blockquote>
+
+            "There is no means of testing which decision is better, because there is no basis for comparison. We live everything as it comes, without warning, like an actor going on cold."
+<br>— Milan Kundera, The Unbearable Lightness of Being
+</blockquote>
+<p>
+
+            One of my favorite quotes, saved in my Goodreads highlights. It's about the impossibility of A/B testing your life decisions—you only get one path, no control group. But in Martech, we get the privilege of running those experiments, of seeing what happens down different paths. My reading data is just one path. But understanding it deeply helps me remember that every customer's journey is equally rich, equally specific, equally worth understanding.
+</p>
+<div class="cta-box">
+<h3>Want to explore your own reading data?</h3>
+<p>Goodreads has an export feature. Download your data and see what patterns emerge. You might be surprised by what you learn about yourself.</p>
+<a href="https://www.goodreads.com/review/import" target="_blank" class="cta-button">Export Your Goodreads Data</a>
+</div>
+<h2>Next in This Series</h2>
+<p>
+
+            I'm planning to build a full interactive dashboard of my reading patterns—think Adobe Analytics but for books. Genre evolution heatmaps, author loyalty networks, reading velocity forecasting. If you're interested in seeing how I'd visualize 529 books worth of data, let me know on LinkedIn.
+</p>
+</div>
+<footer>
+<p><a href="blog.html">← Back to Blog</a></p>
+<p style="margin-top: 16px;">Written by <a href="#">Hema Kamineni</a></p>
+</footer>
+</article>
+<script>
+
+    Chart.defaults.color = '#9BA3C7';
+
+    Chart.defaults.font.family = "'Work Sans', sans-serif";
+
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Genre Distribution Chart
+
+    const genreCtx = document.getElementById('genreChart').getContext('2d');
+
+    const genreChart = new Chart(genreCtx, {
+
+        type: 'doughnut',
+
+        data: {
+
+            labels: ['Fantasy', 'Sci-Fi', 'Literary Fiction', 'Historical Fiction', 'Memoir', 'Other'],
+
+            datasets: [{
+
+                data: [45, 18, 12, 8, 7, 10],
+
+                backgroundColor: [
+
+                    'rgba(157, 78, 221, 0.8)',
+
+                    'rgba(55, 114, 255, 0.8)',
+
+                    'rgba(255, 107, 53, 0.8)',
+
+                    'rgba(0, 217, 165, 0.8)',
+
+                    'rgba(255, 140, 97, 0.8)',
+
+                    'rgba(155, 163, 199, 0.5)'
+
+                ],
+
+                borderColor: '#0A0E27',
+
+                borderWidth: 3
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    position: 'right',
+
+                    labels: {
+
+                        padding: 20,
+
+                        usePointStyle: true,
+
+                        pointStyle: 'circle',
+
+                        font: {
+
+                            size: 13
+
+                        }
+
+                    }
+
+                },
+
+                tooltip: {
+
+                    callbacks: {
+
+                        label: function(context) {
+
+                            return context.label + ': ' + context.parsed + '%';
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+    // Reading Velocity Chart
+
+    const velocityCtx = document.getElementById('velocityChart').getContext('2d');
+
+    const velocityChart = new Chart(velocityCtx, {
+
+        type: 'line',
+
+        data: {
+
+            labels: ['Jan 2023', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 
+
+                     'Jan 2024', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+
+                     'Jan 2025', 'Feb'],
+
+            datasets: [{
+
+                label: 'Books per Month',
+
+                data: [3, 2, 4, 3, 2, 5, 6, 7, 4, 3, 2, 4, 
+
+                       5, 3, 4, 2, 3, 6, 8, 7, 5, 4, 3, 5,
+
+                       4, 3],
+
+                borderColor: '#FF6B35',
+
+                backgroundColor: 'rgba(255, 107, 53, 0.1)',
+
+                borderWidth: 3,
+
+                tension: 0.4,
+
+                fill: true,
+
+                pointRadius: 4,
+
+                pointHoverRadius: 7,
+
+                pointBackgroundColor: '#FF6B35',
+
+                pointBorderColor: '#0A0E27',
+
+                pointBorderWidth: 2
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                },
+
+                tooltip: {
+
+                    backgroundColor: 'rgba(10, 14, 39, 0.95)',
+
+                    padding: 12,
+
+                    titleColor: '#E8EAF6',
+
+                    bodyColor: '#9BA3C7',
+
+                    borderColor: 'rgba(255, 107, 53, 0.3)',
+
+                    borderWidth: 1
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    grid: {
+
+                        color: 'rgba(255, 255, 255, 0.05)'
+
+                    },
+
+                    ticks: {
+
+                        stepSize: 1
+
+                    }
+
+                },
+
+                x: {
+
+                    grid: {
+
+                        display: false
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+    // Page Count vs Rating Chart
+
+    const pageCountCtx = document.getElementById('pageCountChart').getContext('2d');
+
+    const pageCountChart = new Chart(pageCountCtx, {
+
+        type: 'scatter',
+
+        data: {
+
+            datasets: [{
+
+                label: '5-Star Books',
+
+                data: [
+
+                    {x: 592, y: 5}, {x: 544, y: 5}, {x: 432, y: 5}, {x: 658, y: 5}, 
+
+                    {x: 722, y: 5}, {x: 401, y: 5}, {x: 512, y: 5}
+
+                ],
+
+                backgroundColor: 'rgba(0, 217, 165, 0.8)',
+
+                borderColor: '#00D9A5',
+
+                pointRadius: 8
+
+            }, {
+
+                label: '4-Star Books',
+
+                data: [
+
+                    {x: 324, y: 4}, {x: 412, y: 4}, {x: 289, y: 4}, {x: 456, y: 4},
+
+                    {x: 378, y: 4}, {x: 502, y: 4}, {x: 445, y: 4}, {x: 367, y: 4}
+
+                ],
+
+                backgroundColor: 'rgba(157, 78, 221, 0.8)',
+
+                borderColor: '#9D4EDD',
+
+                pointRadius: 6
+
+            }, {
+
+                label: '3-Star Books',
+
+                data: [
+
+                    {x: 267, y: 3}, {x: 312, y: 3}, {x: 398, y: 3}, {x: 245, y: 3},
+
+                    {x: 423, y: 3}, {x: 356, y: 3}
+
+                ],
+
+                backgroundColor: 'rgba(255, 107, 53, 0.8)',
+
+                borderColor: '#FF6B35',
+
+                pointRadius: 6
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    position: 'top',
+
+                    labels: {
+
+                        padding: 20,
+
+                        usePointStyle: true,
+
+                        pointStyle: 'circle'
+
+                    }
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: false,
+
+                    min: 2,
+
+                    max: 5.5,
+
+                    grid: {
+
+                        color: 'rgba(255, 255, 255, 0.05)'
+
+                    },
+
+                    title: {
+
+                        display: true,
+
+                        text: 'My Rating'
+
+                    }
+
+                },
+
+                x: {
+
+                    grid: {
+
+                        color: 'rgba(255, 255, 255, 0.05)'
+
+                    },
+
+                    title: {
+
+                        display: true,
+
+                        text: 'Page Count'
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+</script>
+
+```
+</body>
+</html>
+ 
