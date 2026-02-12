@@ -143,6 +143,12 @@
 
     }
 
+    .nav-links li {
+
+        list-style: none;
+
+    }
+
     .nav-links a {
 
         color: var(--text-muted);
@@ -327,23 +333,29 @@
 
         align-items: center;
 
+        max-width: 600px;
+
+        margin: 0 auto;
+
     }
 
     .btn {
 
-        padding: 12px 28px;
+        padding: 14px 32px;
 
         border-radius: 8px;
 
         font-weight: 600;
 
-        font-size: 15px;
+        font-size: 16px;
 
         text-decoration: none;
 
         transition: all 0.3s ease;
 
         display: inline-block;
+
+        flex: 1;
 
     }
 
@@ -755,9 +767,27 @@
 
         .hero-subtitle { font-size: 18px; }
 
-        .cta-buttons { flex-direction: column; width: 100%; }
+        .cta-buttons { 
 
-        .btn { width: 100%; text-align: center; }
+            flex-direction: column;
+
+            width: 100%;
+
+            max-width: 100%;
+
+            gap: 12px;
+
+        }
+
+        .btn { 
+
+            width: 100%;
+
+            padding: 16px 32px;
+
+            font-size: 16px;
+
+        }
 
         .stats, .competencies, .featured-work { padding: 60px 20px; }
 
@@ -785,6 +815,22 @@
 
         .mobile-nav a { padding: 18px 20px; }
 
+        .cta-buttons {
+
+            width: 100%;
+
+            max-width: 100%;
+
+        }
+
+        .btn {
+
+            width: 100%;
+
+            padding: 16px 24px;
+
+        }
+
     }
 </style>
 
@@ -797,6 +843,7 @@
 <ul class="nav-links">
 <li><a href="index.html">Home</a></li>
 <li><a href="blog.html">Blog</a></li>
+<li><a href="ab-test-simulator.html">Interactive</a></li>
 <li><a href="contact.html">Contact</a></li>
 </ul>
 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
@@ -807,6 +854,7 @@
 <div class="mobile-nav" id="mobileNav">
 <a href="index.html">Home</a>
 <a href="blog.html">Blog</a>
+<a href="ab-test-simulator.html">Interactive</a>
 <a href="contact.html">Contact</a>
 </div>
 <section class="hero">
@@ -887,6 +935,11 @@
 <p class="section-subtitle">Data analytics meets real-world applications</p>
 </div>
 <div class="work-grid">
+<a href="ab-test-simulator.html" class="work-card">
+<span class="work-label">Interactive Tool</span>
+<h3 class="work-title">A/B Test Simulator</h3>
+<p class="work-desc">Interactive demonstration of statistical testing methodology, conversion optimization, and how to interpret test results with real scenarios.</p>
+</a>
 <a href="superbowl-insights.html" class="work-card">
 <span class="work-label">Data Visualization</span>
 <h3 class="work-title">Super Bowl LX QSR Ordering Intelligence</h3>
