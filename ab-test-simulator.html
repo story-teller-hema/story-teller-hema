@@ -294,7 +294,7 @@
 
         text-align: center;
 
-        min-height: 250px;
+        min-height: 200px;
 
         display: flex;
 
@@ -668,6 +668,28 @@
 
         .predict-btn { width: 100%; }
 
+        .variant-preview {
+
+            min-height: 150px;
+
+            padding: 24px 16px;
+
+        }
+
+        .mock-button {
+
+            padding: 12px 32px;
+
+            font-size: 16px;
+
+        }
+
+        .mock-headline {
+
+            font-size: 20px;
+
+        }
+
     }
 </style>
 
@@ -731,7 +753,7 @@
 </div>
 </div>
 <div class="explanation-box" id="explanationBox"></div>
-<button class="run-test-btn" onclick="location.reload()">Try Another Test</button>
+<button class="run-test-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); setTimeout(() => location.reload(), 500);">Try Another Test</button>
 </div>
 </div>
 <script>
