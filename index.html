@@ -33,6 +33,22 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    *::before, *::after {
+
+        box-sizing: border-box;
+
+    }
+
+    /* Prevent any list-style bullets from appearing */
+
+    ul, ol, li {
+
+        list-style: none;
+
+        list-style-type: none;
+
+    }
+
     body {
 
         font-family: 'Work Sans', sans-serif;
@@ -810,7 +826,7 @@
 <div class="mobile-nav" id="mobileNav">
 <a href="index.html">Home</a>
 <a href="blog.html">Blog</a>
-<a href="ab-test-simulator.html">Interactive Sim</a>
+<a href="ab-test-simulator.html">Interactive</a>
 <a href="contact.html">Contact</a>
 </div>
 <section class="hero">
