@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -131,11 +131,7 @@
 
         gap: 40px;
 
-        list-style: none;
-
     }
-
-    .nav-links li { list-style: none; }
 
     .nav-links a {
 
@@ -326,6 +322,8 @@
         transition: all 0.3s ease;
 
         display: inline-block;
+
+        box-sizing: border-box;
 
     }
 
@@ -737,6 +735,8 @@
 
             gap: 12px;
 
+            box-sizing: border-box;
+
         }
 
         .btn {
@@ -744,6 +744,8 @@
             width: 100%;
 
             padding: 16px 20px;
+
+            box-sizing: border-box;
 
         }
 
@@ -794,12 +796,12 @@
 <nav>
 <div class="nav-container">
 <a href="index.html" class="logo">Hema Kamineni</a>
-<ul class="nav-links" style="list-style: none;">
-<li style="list-style: none;"><a href="index.html">Home</a></li>
-<li style="list-style: none;"><a href="blog.html">Blog</a></li>
-<li style="list-style: none;"><a href="ab-test-simulator.html">Interactive</a></li>
-<li style="list-style: none;"><a href="contact.html">Contact</a></li>
-</ul>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="blog.html">Blog</a>
+<a href="ab-test-simulator.html">Interactive</a>
+<a href="contact.html">Contact</a>
+</div>
 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
 </div>
 </nav>
@@ -808,7 +810,7 @@
 <div class="mobile-nav" id="mobileNav">
 <a href="index.html">Home</a>
 <a href="blog.html">Blog</a>
-<a href="ab-test-simulator.html">Interactive</a>
+<a href="ab-test-simulator.html">Interactive Sim</a>
 <a href="contact.html">Contact</a>
 </div>
 <section class="hero">
