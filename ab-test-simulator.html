@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A/B Test Simulator | Hema Kamineni</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+        :root {
+
+            --primary: #0A0E27;
+
+            --accent: #FF6B35;
+
+            --success: #00D9A5;
+
+            --purple: #9D4EDD;
+
+            --text: #E8EAF6;
+
+            --text-muted: #9BA3C7;
+
+            --border: rgba(255, 255, 255, 0.1);
+
+        }
+
+```
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+
+        font-family: 'Work Sans', sans-serif;
+
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1129 50%, #1a0e2e 100%);
+
+        color: var(--text);
+
+        line-height: 1.6;
+
+        min-height: 100vh;
+
+        overflow-x: hidden;
+
+    }
+
+    body::before {
+
+        content: '';
+
+        position: fixed;
+
+        top: 0; left: 0;
+
+        width: 100%; height: 100%;
+
+        background-image: 
+
+            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+
+            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+
+        background-size: 50px 50px;
+
+        z-index: 0;
+
+        pointer-events: none;
+
+    }
+
+    .container {
+
+        max-width: 1200px;
+
+        margin: 0 auto;
+
+        padding: 40px 20px;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    .breadcrumb {
+
+        margin-bottom: 32px;
+
+        font-size: 14px;
+
+        color: var(--text-muted);
+
+    }
+
+    .breadcrumb a {
+
+        color: var(--accent);
+
+        text-decoration: none;
+
+        transition: color 0.3s ease;
+
+    }
+
+    .breadcrumb a:hover { color: #FF8C61; }
+
+    header {
+
+        text-align: center;
+
+        margin-bottom: 60px;
+
+    }
+
+    .badge {
+
+        display: inline-block;
+
+        padding: 6px 14px;
+
+        background: rgba(255, 107, 53, 0.1);
+
+        border: 1px solid rgba(255, 107, 53, 0.3);
+
+        border-radius: 20px;
+
+        font-size: 12px;
+
+        font-weight: 600;
+
+        color: var(--accent);
+
+        text-transform: uppercase;
+
+        margin-bottom: 20px;
+
+    }
+
+    h1 {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 48px;
+
+        font-weight: 400;
+
+        margin-bottom: 20px;
+
+        background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+
+        -webkit-background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+
+    }
+
+    .subtitle {
+
+        font-size: 20px;
+
+        color: var(--text-muted);
+
+        max-width: 700px;
+
+        margin: 0 auto;
+
+    }
+
+    .scenario-selector {
+
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+        gap: 20px;
+
+        margin-bottom: 60px;
+
+    }
+
+    .scenario-card {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 2px solid var(--border);
+
+        border-radius: 16px;
+
+        padding: 24px;
+
+        cursor: pointer;
+
+        transition: all 0.3s ease;
+
+    }
+
+    .scenario-card:hover {
+
+        transform: translateY(-4px);
+
+        border-color: var(--accent);
+
+    }
+
+    .scenario-card.active {
+
+        border-color: var(--accent);
+
+        background: rgba(255, 107, 53, 0.1);
+
+    }
+
+    .scenario-card h3 {
+
+        font-size: 18px;
+
+        font-weight: 600;
+
+        margin-bottom: 8px;
+
+        color: var(--text);
+
+    }
+
+    .scenario-card p {
+
+        font-size: 14px;
+
+        color: var(--text-muted);
+
+    }
+
+    .simulator-box {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 24px;
+
+        padding: 40px;
+
+        margin-bottom: 40px;
+
+    }
+
+    .variants-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 30px;
+
+        margin-bottom: 40px;
+
+    }
+
+    .variant-preview {
+
+        background: rgba(255, 255, 255, 0.05);
+
+        border: 1px solid var(--border);
+
+        border-radius: 16px;
+
+        padding: 32px;
+
+        text-align: center;
+
+        min-height: 250px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+    }
+
+    .variant-label {
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        color: var(--text-muted);
+
+        text-transform: uppercase;
+
+        margin-bottom: 20px;
+
+    }
+
+    .mock-button {
+
+        padding: 16px 48px;
+
+        border-radius: 8px;
+
+        font-size: 18px;
+
+        font-weight: 600;
+
+        border: none;
+
+        cursor: pointer;
+
+        margin-bottom: 16px;
+
+    }
+
+    .mock-button.orange {
+
+        background: var(--accent);
+
+        color: white;
+
+    }
+
+    .mock-button.green {
+
+        background: var(--success);
+
+        color: var(--primary);
+
+    }
+
+    .mock-headline {
+
+        font-size: 24px;
+
+        font-weight: 700;
+
+        margin-bottom: 16px;
+
+    }
+
+    .prediction-section {
+
+        text-align: center;
+
+        margin-bottom: 40px;
+
+    }
+
+    .prediction-section h3 {
+
+        font-size: 22px;
+
+        margin-bottom: 20px;
+
+        color: var(--text);
+
+    }
+
+    .prediction-buttons {
+
+        display: flex;
+
+        gap: 20px;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+    }
+
+    .predict-btn {
+
+        padding: 12px 32px;
+
+        border-radius: 8px;
+
+        font-size: 16px;
+
+        font-weight: 600;
+
+        border: 2px solid var(--border);
+
+        background: rgba(255, 255, 255, 0.05);
+
+        color: var(--text);
+
+        cursor: pointer;
+
+        transition: all 0.3s ease;
+
+    }
+
+    .predict-btn:hover {
+
+        border-color: var(--accent);
+
+        background: rgba(255, 107, 53, 0.1);
+
+    }
+
+    .predict-btn.selected {
+
+        border-color: var(--accent);
+
+        background: var(--accent);
+
+        color: white;
+
+    }
+
+    .run-test-btn {
+
+        display: block;
+
+        margin: 40px auto;
+
+        padding: 16px 48px;
+
+        border-radius: 12px;
+
+        font-size: 18px;
+
+        font-weight: 700;
+
+        border: none;
+
+        background: linear-gradient(135deg, var(--accent) 0%, #FF8C61 100%);
+
+        color: white;
+
+        cursor: pointer;
+
+        transition: all 0.3s ease;
+
+        box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+
+    }
+
+    .run-test-btn:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow: 0 12px 32px rgba(255, 107, 53, 0.4);
+
+    }
+
+    .run-test-btn:disabled {
+
+        opacity: 0.5;
+
+        cursor: not-allowed;
+
+    }
+
+    .results-section {
+
+        display: none;
+
+        animation: fadeInUp 0.8s ease-out;
+
+    }
+
+    .results-section.show {
+
+        display: block;
+
+    }
+
+    .stats-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+        gap: 20px;
+
+        margin-bottom: 40px;
+
+    }
+
+    .stat-card {
+
+        background: rgba(255, 255, 255, 0.05);
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        padding: 24px;
+
+        text-align: center;
+
+    }
+
+    .stat-value {
+
+        font-size: 32px;
+
+        font-weight: 700;
+
+        margin-bottom: 8px;
+
+    }
+
+    .stat-value.winner {
+
+        color: var(--success);
+
+    }
+
+    .stat-label {
+
+        font-size: 14px;
+
+        color: var(--text-muted);
+
+        text-transform: uppercase;
+
+    }
+
+    .chart-container {
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 20px;
+
+        padding: 32px;
+
+        margin-bottom: 40px;
+
+    }
+
+    .chart-wrapper {
+
+        position: relative;
+
+        height: 300px;
+
+    }
+
+    .winner-banner {
+
+        background: linear-gradient(135deg, rgba(0, 217, 165, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+
+        border: 2px solid var(--success);
+
+        border-radius: 16px;
+
+        padding: 32px;
+
+        text-align: center;
+
+        margin-bottom: 40px;
+
+    }
+
+    .winner-banner h2 {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 36px;
+
+        color: var(--success);
+
+        margin-bottom: 16px;
+
+    }
+
+    .winner-banner p {
+
+        font-size: 18px;
+
+        color: var(--text);
+
+    }
+
+    .explanation-box {
+
+        background: rgba(157, 78, 221, 0.1);
+
+        border: 1px solid rgba(157, 78, 221, 0.3);
+
+        border-radius: 16px;
+
+        padding: 32px;
+
+    }
+
+    .explanation-box h3 {
+
+        color: var(--purple);
+
+        margin-bottom: 16px;
+
+    }
+
+    .confetti {
+
+        position: fixed;
+
+        width: 10px;
+
+        height: 10px;
+
+        background: var(--success);
+
+        position: absolute;
+
+        animation: confetti-fall 3s ease-out forwards;
+
+    }
+
+    @keyframes confetti-fall {
+
+        to {
+
+            transform: translateY(100vh) rotate(360deg);
+
+            opacity: 0;
+
+        }
+
+    }
+
+    @keyframes fadeInUp {
+
+        from { opacity: 0; transform: translateY(30px); }
+
+        to { opacity: 1; transform: translateY(0); }
+
+    }
+
+    @media (max-width: 768px) {
+
+        h1 { font-size: 32px; }
+
+        .variants-grid { grid-template-columns: 1fr; }
+
+        .prediction-buttons { flex-direction: column; }
+
+        .predict-btn { width: 100%; }
+
+    }
+</style>
+
+```
+</head>
+<body>
+<div class="container">
+<div class="breadcrumb">
+<a href="index.html">Home</a> / <a href="blog.html">Blog</a> / A/B Test Simulator
+</div>
+
+```
+<header>
+<span class="badge">Interactive Tool</span>
+<h1>A/B Test Simulator</h1>
+<p class="subtitle">
+
+            Experience how A/B testing works with real statistical methodology. Choose a scenario, predict the winner, and see how conversion rate optimization drives growth.
+</p>
+</header>
+<div class="scenario-selector">
+<div class="scenario-card active" data-scenario="cta-copy">
+<h3>🎯 CTA Copy Test</h3>
+<p>Which call-to-action drives more conversions?</p>
+</div>
+<div class="scenario-card" data-scenario="button-color">
+<h3>🎨 Button Color Test</h3>
+<p>Does color really impact conversion rates?</p>
+</div>
+<div class="scenario-card" data-scenario="offer-personalization">
+<h3>👤 Offer Personalization Test</h3>
+<p>New customer offer vs returning customer offer</p>
+</div>
+<div class="scenario-card" data-scenario="value-type">
+<h3>⚡ Immediate vs Delayed Value</h3>
+<p>Instant gratification vs loyalty rewards</p>
+</div>
+</div>
+<div class="simulator-box">
+<div class="variants-grid" id="variantsDisplay">
+<!-- Dynamic content -->
+</div>
+<div class="prediction-section">
+<h3>Which variant will win?</h3>
+<div class="prediction-buttons">
+<button class="predict-btn" data-prediction="A">Variant A</button>
+<button class="predict-btn" data-prediction="B">Variant B</button>
+<button class="predict-btn" data-prediction="tie">No Significant Difference</button>
+</div>
+</div>
+<button class="run-test-btn" id="runTestBtn" disabled>Make Your Prediction First</button>
+</div>
+<div class="results-section" id="resultsSection">
+<div class="winner-banner" id="winnerBanner"></div>
+<div class="stats-grid" id="statsGrid"></div>
+<div class="chart-container">
+<h3 style="margin-bottom: 24px;">Conversion Rate Comparison</h3>
+<div class="chart-wrapper">
+<canvas id="resultsChart"></canvas>
+</div>
+</div>
+<div class="explanation-box" id="explanationBox"></div>
+<button class="run-test-btn" onclick="location.reload()">Try Another Test</button>
+</div>
+</div>
+<script>
+
+    const scenarios = {
+
+        'cta-copy': {
+
+            name: 'CTA Copy Test',
+
+            variantA: {
+
+                type: 'button',
+
+                content: 'Order Now',
+
+                color: 'orange'
+
+            },
+
+            variantB: {
+
+                type: 'button',
+
+                content: 'Start Your Order',
+
+                color: 'green'
+
+            },
+
+            results: {
+
+                sampleSize: 10000,
+
+                variantA: { conversions: 420, cvr: 4.2 },
+
+                variantB: { conversions: 510, cvr: 5.1 },
+
+                winner: 'B',
+
+                lift: 21.4,
+
+                pValue: 0.001,
+
+                confidence: 99.9,
+
+                explanation: 'Variant B won with a 21% lift. "Start Your Order" uses action-oriented language with lower commitment framing. It implies a journey rather than a transaction, reducing psychological friction at the decision point.'
+
+            }
+
+        },
+
+        'button-color': {
+
+            name: 'Button Color Test',
+
+            variantA: {
+
+                type: 'button',
+
+                content: 'Order Now',
+
+                color: 'orange'
+
+            },
+
+            variantB: {
+
+                type: 'button',
+
+                content: 'Order Now',
+
+                color: 'green'
+
+            },
+
+            results: {
+
+                sampleSize: 10000,
+
+                variantA: { conversions: 480, cvr: 4.8 },
+
+                variantB: { conversions: 470, cvr: 4.7 },
+
+                winner: 'tie',
+
+                lift: 2.1,
+
+                pValue: 0.42,
+
+                confidence: 58,
+
+                explanation: 'No statistically significant difference (p=0.42). Color alone rarely drives conversion when other elements remain constant. Context matters more than color theory. Focus testing efforts on copy, value prop, and placement instead.'
+
+            }
+
+        },
+
+        'offer-personalization': {
+
+            name: 'Offer Personalization Test',
+
+            variantA: {
+
+                type: 'headline',
+
+                content: 'First-time customer? Get 20% off',
+
+                subtext: 'New Customer Offer'
+
+            },
+
+            variantB: {
+
+                type: 'headline',
+
+                content: 'Welcome back! 15% off your favorites',
+
+                subtext: 'Returning Customer Offer'
+
+            },
+
+            results: {
+
+                sampleSize: 10000,
+
+                variantA: { conversions: 580, cvr: 5.8 },
+
+                variantB: { conversions: 720, cvr: 7.2 },
+
+                winner: 'B',
+
+                lift: 24.1,
+
+                pValue: 0.002,
+
+                confidence: 99.8,
+
+                explanation: 'Variant B won with a 24% lift. Personalized messaging to returning customers outperformed generic new customer offers. Why? Recognition and relevance. "Your favorites" signals that we know them, building loyalty. The 5% discount difference mattered less than personalization. This is exactly why 1:1 offer sequencing (based on loyalty tier) beats blanket promotions—context-aware offers convert better even at lower discounts.'
+
+            }
+
+        },
+
+        'value-type': {
+
+            name: 'Immediate vs Delayed Value',
+
+            variantA: {
+
+                type: 'headline',
+
+                content: 'Free Delivery on This Order',
+
+                subtext: 'Instant Benefit'
+
+            },
+
+            variantB: {
+
+                type: 'headline',
+
+                content: 'Earn 2x Points Toward Free Meals',
+
+                subtext: 'Loyalty Reward'
+
+            },
+
+            results: {
+
+                sampleSize: 10000,
+
+                variantA: { conversions: 650, cvr: 6.5 },
+
+                variantB: { conversions: 420, cvr: 4.2 },
+
+                winner: 'A',
+
+                lift: 54.8,
+
+                pValue: 0.0001,
+
+                confidence: 99.99,
+
+                explanation: 'Variant A crushed it with a 55% lift. In QSR, immediate gratification wins. Free delivery provides instant, tangible value customers can feel right now. Points require mental math, delayed redemption, and trust in future value. Behavioral economics principle: present bias means people heavily discount future rewards. Lesson: When optimizing for conversion (not LTV), lead with immediate benefits. Save loyalty mechanics for post-purchase engagement.'
+
+            }
+
+        }
+
+    };
+
+    let currentScenario = 'cta-copy';
+
+    let userPrediction = null;
+
+    // Scenario selection
+
+    document.querySelectorAll('.scenario-card').forEach(card => {
+
+        card.addEventListener('click', () => {
+
+            document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('active'));
+
+            card.classList.add('active');
+
+            currentScenario = card.dataset.scenario;
+
+            renderVariants();
+
+            resetTest();
+
+        });
+
+    });
+
+    // Prediction selection
+
+    document.querySelectorAll('.predict-btn').forEach(btn => {
+
+        btn.addEventListener('click', () => {
+
+            document.querySelectorAll('.predict-btn').forEach(b => b.classList.remove('selected'));
+
+            btn.classList.add('selected');
+
+            userPrediction = btn.dataset.prediction;
+
+            document.getElementById('runTestBtn').disabled = false;
+
+            document.getElementById('runTestBtn').textContent = 'Run Test';
+
+        });
+
+    });
+
+    // Run test
+
+    document.getElementById('runTestBtn').addEventListener('click', () => {
+
+        runTest();
+
+    });
+
+    function renderVariants() {
+
+        const scenario = scenarios[currentScenario];
+
+        const container = document.getElementById('variantsDisplay');
+
+        container.innerHTML = `
+<div class="variant-preview">
+<div class="variant-label">Variant A</div>
+
+                ${scenario.variantA.type === 'button' ? 
+
+                    `<button class="mock-button ${scenario.variantA.color}">${scenario.variantA.content}</button>` :
+
+                    `<div class="mock-headline">${scenario.variantA.content}</div>
+<div style="font-size:12px;color:var(--text-muted);margin-top:8px;">${scenario.variantA.subtext || scenario.variantA.position}</div>`
+
+                }
+</div>
+<div class="variant-preview">
+<div class="variant-label">Variant B</div>
+
+                ${scenario.variantB.type === 'button' ? 
+
+                    `<button class="mock-button ${scenario.variantB.color}">${scenario.variantB.content}</button>` :
+
+                    `<div class="mock-headline">${scenario.variantB.content}</div>
+<div style="font-size:12px;color:var(--text-muted);margin-top:8px;">${scenario.variantB.subtext || scenario.variantB.position}</div>`
+
+                }
+</div>
+
+        `;
+
+    }
+
+    function resetTest() {
+
+        document.getElementById('resultsSection').classList.remove('show');
+
+        userPrediction = null;
+
+        document.querySelectorAll('.predict-btn').forEach(b => b.classList.remove('selected'));
+
+        document.getElementById('runTestBtn').disabled = true;
+
+        document.getElementById('runTestBtn').textContent = 'Make Your Prediction First';
+
+    }
+
+    function runTest() {
+
+        const scenario = scenarios[currentScenario];
+
+        const results = scenario.results;
+
+        // Show results
+
+        setTimeout(() => {
+
+            document.getElementById('resultsSection').classList.add('show');
+
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+
+            // Winner banner
+
+            const wasCorrect = (userPrediction === results.winner) || 
+
+                              (userPrediction === 'tie' && results.winner === 'tie');
+
+            let bannerHTML = '';
+
+            if (results.winner === 'tie') {
+
+                bannerHTML = `
+<h2>No Significant Winner</h2>
+<p>The difference was not statistically significant (p=${results.pValue})</p>
+
+                    ${wasCorrect ? '<p style="color:var(--success);margin-top:12px;">✓ You predicted this correctly!</p>' : '<p style="color:var(--accent);margin-top:12px;">✗ Your prediction: Variant ' + userPrediction + '</p>'}
+
+                `;
+
+            } else {
+
+                bannerHTML = `
+<h2>🏆 Variant ${results.winner} Wins!</h2>
+<p>+${results.lift.toFixed(1)}% lift with ${results.confidence}% confidence</p>
+
+                    ${wasCorrect ? '<p style="color:var(--success);margin-top:12px;">✓ You predicted this correctly!</p>' : '<p style="color:var(--accent);margin-top:12px;">✗ Your prediction: ' + (userPrediction === 'tie' ? 'No significant difference' : 'Variant ' + userPrediction) + '</p>'}
+
+                `;
+
+                // Confetti
+
+                if (wasCorrect) {
+
+                    createConfetti();
+
+                }
+
+            }
+
+            document.getElementById('winnerBanner').innerHTML = bannerHTML;
+
+            // Stats grid
+
+            document.getElementById('statsGrid').innerHTML = `
+<div class="stat-card">
+<div class="stat-value">${results.sampleSize.toLocaleString()}</div>
+<div class="stat-label">Sample Size</div>
+</div>
+<div class="stat-card">
+<div class="stat-value ${results.winner === 'A' ? 'winner' : ''}">${results.variantA.cvr}%</div>
+<div class="stat-label">Variant A CVR</div>
+</div>
+<div class="stat-card">
+<div class="stat-value ${results.winner === 'B' ? 'winner' : ''}">${results.variantB.cvr}%</div>
+<div class="stat-label">Variant B CVR</div>
+</div>
+<div class="stat-card">
+<div class="stat-value">${results.confidence}%</div>
+<div class="stat-label">Confidence</div>
+</div>
+
+            `;
+
+            // Explanation
+
+            document.getElementById('explanationBox').innerHTML = `
+<h3>💡 Why This Happened</h3>
+<p style="font-size:16px;line-height:1.7;margin-top:16px;">${results.explanation}</p>
+<p style="font-size:14px;color:var(--text-muted);margin-top:20px;padding-top:20px;border-top:1px solid var(--border);">
+<strong>Statistical Note:</strong> With ${results.sampleSize.toLocaleString()} visitors per variant and p=${results.pValue}, we can be ${results.confidence}% confident this result isn't due to chance. ${results.winner === 'tie' ? 'Since p > 0.05, we fail to reject the null hypothesis—no significant difference exists.' : 'Since p < 0.05, we reject the null hypothesis and declare a winner.'}
+</p>
+
+            `;
+
+            // Chart
+
+            renderChart(results);
+
+        }, 800);
+
+    }
+
+    function renderChart(results) {
+
+        const ctx = document.getElementById('resultsChart').getContext('2d');
+
+        new Chart(ctx, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: ['Variant A', 'Variant B'],
+
+                datasets: [{
+
+                    label: 'Conversion Rate (%)',
+
+                    data: [results.variantA.cvr, results.variantB.cvr],
+
+                    backgroundColor: [
+
+                        results.winner === 'A' ? 'rgba(0, 217, 165, 0.8)' : 'rgba(155, 163, 199, 0.5)',
+
+                        results.winner === 'B' ? 'rgba(0, 217, 165, 0.8)' : 'rgba(155, 163, 199, 0.5)'
+
+                    ],
+
+                    borderColor: [
+
+                        results.winner === 'A' ? '#00D9A5' : '#9BA3C7',
+
+                        results.winner === 'B' ? '#00D9A5' : '#9BA3C7'
+
+                    ],
+
+                    borderWidth: 2
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: { display: false }
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+
+                        ticks: {
+
+                            callback: function(value) {
+
+                                return value + '%';
+
+                            },
+
+                            color: '#9BA3C7'
+
+                        }
+
+                    },
+
+                    x: {
+
+                        grid: { display: false },
+
+                        ticks: { color: '#E8EAF6' }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+    function createConfetti() {
+
+        for (let i = 0; i < 50; i++) {
+
+            setTimeout(() => {
+
+                const confetti = document.createElement('div');
+
+                confetti.className = 'confetti';
+
+                confetti.style.left = Math.random() * 100 + '%';
+
+                confetti.style.background = ['#00D9A5', '#FF6B35', '#9D4EDD'][Math.floor(Math.random() * 3)];
+
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+
+                document.body.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 3000);
+
+            }, i * 30);
+
+        }
+
+    }
+
+    // Initialize
+
+    renderVariants();
+</script>
+
+```
+</body>
+</html>
+ 
