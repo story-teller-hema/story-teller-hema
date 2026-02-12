@@ -244,6 +244,30 @@
 
         margin-bottom: 40px;
 
+        scroll-margin-top: 100px;
+
+    }
+
+    .scroll-instruction {
+
+        text-align: center;
+
+        color: var(--text-muted);
+
+        font-size: 14px;
+
+        margin-top: 30px;
+
+        animation: pulse 2s ease-in-out infinite;
+
+    }
+
+    @keyframes pulse {
+
+        0%, 100% { opacity: 0.6; }
+
+        50% { opacity: 1; }
+
     }
 
     .variants-grid {
@@ -682,10 +706,11 @@
 <p>Instant gratification vs loyalty rewards</p>
 </div>
 </div>
-<div class="simulator-box">
+<div class="simulator-box" id="testSimulator">
 <div class="variants-grid" id="variantsDisplay">
 <!-- Dynamic content -->
 </div>
+<p class="scroll-instruction">↓ Scroll down to make your prediction ↓</p>
 <div class="prediction-section">
 <h3>Which variant will win?</h3>
 <div class="prediction-buttons">
@@ -918,6 +943,20 @@
             renderVariants();
 
             resetTest();
+
+            // Smooth scroll to simulator box
+
+            setTimeout(() => {
+
+                document.getElementById('testSimulator').scrollIntoView({ 
+
+                    behavior: 'smooth', 
+
+                    block: 'start' 
+
+                });
+
+            }, 100);
 
         });
 
