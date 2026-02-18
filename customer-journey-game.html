@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G6C2CXBS3J"></script>
+<script>
+
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag(){dataLayer.push(arguments);}
+
+      gtag('js', new Date());
+
+      gtag('config', 'G-G6C2CXBS3J');
+</script>
+
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Customer Journey Runner | Hema Kamineni</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-```
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
 
@@ -19,15 +31,39 @@
 
         color: #E8EAF6;
 
-        display: flex;
-
-        justify-content: center;
-
-        align-items: center;
-
         min-height: 100vh;
 
-        overflow: hidden;
+        padding: 40px 20px;
+
+        position: relative;
+
+    }
+
+    body::before {
+
+        content: '';
+
+        position: fixed;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        background-image: 
+
+            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+
+            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+
+        background-size: 50px 50px;
+
+        z-index: 0;
+
+        pointer-events: none;
 
     }
 
@@ -37,7 +73,11 @@
 
         width: 100%;
 
-        padding: 20px;
+        margin: 0 auto;
+
+        position: relative;
+
+        z-index: 1;
 
     }
 
@@ -102,6 +142,8 @@
         overflow: hidden;
 
         box-shadow: 0 0 40px rgba(0,217,165,0.3);
+
+        min-height: 500px;
 
     }
 
@@ -267,7 +309,11 @@
 
         text-align: center;
 
-        padding: 40px;
+        padding: 20px;
+
+        overflow-y: auto;
+
+        -webkit-overflow-scrolling: touch;
 
     }
 
@@ -367,7 +413,31 @@
 
         h1 {
 
-            font-size: 18px;
+            font-size: 16px;
+
+            line-height: 1.4;
+
+        }
+
+        .subtitle {
+
+            font-size: 12px;
+
+        }
+
+        .game-canvas-wrapper {
+
+            border-width: 3px;
+
+            min-height: 60vh;
+
+        }
+
+        canvas {
+
+            touch-action: none;
+
+            min-height: 60vh;
 
         }
 
@@ -377,6 +447,14 @@
 
             gap: 8px;
 
+            font-size: 10px;
+
+        }
+
+        .stat {
+
+            padding: 8px;
+
         }
 
         .stat-value {
@@ -385,10 +463,100 @@
 
         }
 
+        .stat-label {
+
+            font-size: 7px;
+
+        }
+
+        .controls {
+
+            display: none;
+
+        }
+
+        .mobile-controls {
+
+            display: grid;
+
+        }
+
+        .control-btn {
+
+            font-size: 10px;
+
+            padding: 16px;
+
+        }
+
+        .game-container {
+
+            padding: 0;
+
+        }
+
+        body {
+
+            padding: 20px 10px;
+
+        }
+
+        #startScreen, #gameOverScreen {
+
+            padding: 15px;
+
+            justify-content: flex-start;
+
+            padding-top: 30px;
+
+        }
+
+        .screen-title {
+
+            font-size: 14px;
+
+            margin-bottom: 15px;
+
+            line-height: 1.4;
+
+        }
+
+        .instructions {
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+
+            line-height: 1.5;
+
+        }
+
+        .power-ups-list {
+
+            margin: 12px 0;
+
+            font-size: 11px;
+
+        }
+
+        .power-ups-list li {
+
+            margin: 4px 0;
+
+        }
+
+        .start-button {
+
+            font-size: 11px;
+
+            padding: 12px 24px;
+
+        }
+
     }
 </style>
 
-```
+
 </head>
 <body>
 <div class="game-container">
@@ -396,7 +564,7 @@
 <a href="index.html">Home</a> / <a href="interactive-sims.html">Interactive Sims</a> / Customer Journey Runner
 </div>
 
-```
+
 <div class="game-header">
 <h1>CUSTOMER JOURNEY RUNNER</h1>
 <p class="subtitle">Guide customers from awareness to conversion</p>
@@ -455,6 +623,62 @@
 
     const ctx = canvas.getContext('2d');
 
+    // Make canvas responsive
+
+    function resizeCanvas() {
+
+        const container = canvas.parentElement;
+
+        const containerWidth = container.clientWidth;
+
+        // Set display size (css pixels)
+
+        canvas.style.width = '100%';
+
+        canvas.style.height = 'auto';
+
+        // Determine aspect ratio based on screen size
+
+        // Mobile gets much taller canvas for better visibility
+
+        const isMobile = window.innerWidth <= 768;
+
+        const aspectRatio = isMobile ? 0.8 : 2; // Mobile: almost square, Desktop: wide
+
+        // Set actual size in memory (scaled to account for extra pixel density)
+
+        const scale = window.devicePixelRatio || 1;
+
+        canvas.width = Math.floor(containerWidth * scale);
+
+        canvas.height = Math.floor((containerWidth / aspectRatio) * scale);
+
+        // Set substantial minimum height on mobile - 60% of viewport height
+
+        if (isMobile) {
+
+            const minHeight = window.innerHeight * 0.6 * scale;
+
+            if (canvas.height < minHeight) {
+
+                canvas.height = minHeight;
+
+            }
+
+        }
+
+        // Normalize coordinate system
+
+        ctx.scale(scale, scale);
+
+    }
+
+    // Initial setup and handle window resize
+
+    resizeCanvas();
+
+    window.addEventListener('resize', resizeCanvas);
+
     let gameRunning = false;
 
     let score = 0;
@@ -463,9 +687,19 @@
 
     let distance = 0;
 
-    let gameSpeed = 5;
+    let gameSpeed = 4;  // Reduced from 5 to 4 - slower starting speed
 
     let gravity = 0.8;
+
+    // Get canvas logical size for game coordinates
+
+    function getCanvasSize() {
+
+        const rect = canvas.getBoundingClientRect();
+
+        return { width: rect.width, height: rect.height };
+
+    }
 
     // Player (customer)
 
@@ -559,17 +793,23 @@
 
     const duckBtn = document.getElementById('duckBtn');
 
+    // Prevent default touch behaviors
+
     jumpBtn.addEventListener('touchstart', (e) => {
 
         e.preventDefault();
 
+        e.stopPropagation();
+
         if (gameRunning) jump();
 
-    });
+    }, { passive: false });
 
     duckBtn.addEventListener('touchstart', (e) => {
 
         e.preventDefault();
+
+        e.stopPropagation();
 
         if (gameRunning) {
 
@@ -579,9 +819,21 @@
 
         }
 
-    });
+    }, { passive: false });
 
     duckBtn.addEventListener('touchend', (e) => {
+
+        e.preventDefault();
+
+        e.stopPropagation();
+
+        player.ducking = false;
+
+        player.height = 40;
+
+    }, { passive: false });
+
+    duckBtn.addEventListener('touchcancel', (e) => {
 
         e.preventDefault();
 
@@ -589,7 +841,7 @@
 
         player.height = 40;
 
-    });
+    }, { passive: false });
 
     // Also support mouse for desktop testing
 
@@ -649,7 +901,7 @@
 
         distance = 0;
 
-        gameSpeed = 5;
+        gameSpeed = 4;  // Reduced from 5 to 4
 
         obstacles = [];
 
@@ -675,13 +927,15 @@
 
     function spawnObstacle() {
 
-        if (Math.random() < 0.02) {
+        if (Math.random() < 0.01) {  // Reduced from 0.02 to 0.01 - half as many obstacles
+
+            const canvasSize = getCanvasSize();
 
             const type = obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)];
 
             obstacles.push({
 
-                x: canvas.width,
+                x: canvasSize.width,
 
                 y: 300,
 
@@ -699,13 +953,15 @@
 
     function spawnPowerup() {
 
-        if (Math.random() < 0.008) {
+        if (Math.random() < 0.012) {  // Increased from 0.008 to 0.012 - more powerups
+
+            const canvasSize = getCanvasSize();
 
             const type = powerupTypes[Math.floor(Math.random() * powerupTypes.length)];
 
             powerups.push({
 
-                x: canvas.width,
+                x: canvasSize.width,
 
                 y: 150 + Math.random() * 100,
 
@@ -903,7 +1159,7 @@
 
         distance += gameSpeed / 10;
 
-        gameSpeed += 0.001;
+        gameSpeed += 0.0005;  // Reduced from 0.001 - game speeds up half as fast
 
         document.getElementById('score').textContent = score;
 
@@ -917,17 +1173,19 @@
 
     function draw() {
 
+        const canvasSize = getCanvasSize();
+
         // Clear canvas
 
         ctx.fillStyle = '#1a0e2e';
 
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(0, 0, canvasSize.width, canvasSize.height);
 
         // Draw ground
 
         ctx.fillStyle = 'rgba(0,217,165,0.2)';
 
-        ctx.fillRect(0, 340, canvas.width, 60);
+        ctx.fillRect(0, 340, canvasSize.width, 60);
 
         ctx.strokeStyle = '#00D9A5';
 
@@ -937,7 +1195,7 @@
 
         ctx.moveTo(0, 340);
 
-        ctx.lineTo(canvas.width, 340);
+        ctx.lineTo(canvasSize.width, 340);
 
         ctx.stroke();
 
@@ -1012,7 +1270,7 @@
     }
 </script>
 
-```
+
 </body>
 </html>
  
