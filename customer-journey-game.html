@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Journey Runner | Hema Kamineni</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+```
+
+    body {
+
+        font-family: 'Work Sans', sans-serif;
+
+        background: linear-gradient(135deg, #0A0E27 0%, #0d1129 50%, #1a0e2e 100%);
+
+        color: #E8EAF6;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        min-height: 100vh;
+
+        overflow: hidden;
+
+    }
+
+    .game-container {
+
+        max-width: 900px;
+
+        width: 100%;
+
+        padding: 20px;
+
+    }
+
+    .breadcrumb {
+
+        font-size: 14px;
+
+        color: #9BA3C7;
+
+        margin-bottom: 20px;
+
+    }
+
+    .breadcrumb a {
+
+        color: #FF6B35;
+
+        text-decoration: none;
+
+    }
+
+    .game-header {
+
+        text-align: center;
+
+        margin-bottom: 30px;
+
+    }
+
+    h1 {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 24px;
+
+        color: #00D9A5;
+
+        margin-bottom: 10px;
+
+        text-shadow: 3px 3px 0 rgba(0,217,165,0.3);
+
+    }
+
+    .subtitle {
+
+        font-size: 14px;
+
+        color: #9BA3C7;
+
+    }
+
+    .game-canvas-wrapper {
+
+        position: relative;
+
+        background: #1a0e2e;
+
+        border: 4px solid #00D9A5;
+
+        border-radius: 12px;
+
+        overflow: hidden;
+
+        box-shadow: 0 0 40px rgba(0,217,165,0.3);
+
+    }
+
+    canvas {
+
+        display: block;
+
+        width: 100%;
+
+        height: auto;
+
+    }
+
+    .game-stats {
+
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 16px;
+
+        margin-top: 20px;
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 12px;
+
+    }
+
+    .stat {
+
+        background: rgba(255,255,255,0.05);
+
+        border: 2px solid rgba(255,255,255,0.1);
+
+        border-radius: 8px;
+
+        padding: 12px;
+
+        text-align: center;
+
+    }
+
+    .stat-label {
+
+        color: #9BA3C7;
+
+        font-size: 8px;
+
+        margin-bottom: 8px;
+
+    }
+
+    .stat-value {
+
+        color: #00D9A5;
+
+        font-size: 16px;
+
+    }
+
+    .controls {
+
+        margin-top: 20px;
+
+        text-align: center;
+
+        font-size: 12px;
+
+        color: #9BA3C7;
+
+    }
+
+    .controls strong {
+
+        color: #FF6B35;
+
+    }
+
+    .mobile-controls {
+
+        display: none;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 16px;
+
+        margin-top: 20px;
+
+    }
+
+    .control-btn {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 12px;
+
+        padding: 20px;
+
+        background: rgba(0,217,165,0.2);
+
+        border: 2px solid #00D9A5;
+
+        border-radius: 12px;
+
+        color: #00D9A5;
+
+        cursor: pointer;
+
+        transition: all 0.2s;
+
+        user-select: none;
+
+        -webkit-tap-highlight-color: transparent;
+
+    }
+
+    .control-btn:active {
+
+        background: rgba(0,217,165,0.4);
+
+        transform: scale(0.95);
+
+    }
+
+    @media (max-width: 768px) {
+
+        .controls {
+
+            display: none;
+
+        }
+
+        .mobile-controls {
+
+            display: grid;
+
+        }
+
+    }
+
+    #startScreen, #gameOverScreen {
+
+        position: absolute;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        background: rgba(10, 14, 39, 0.95);
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        text-align: center;
+
+        padding: 40px;
+
+    }
+
+    .screen-title {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 20px;
+
+        color: #00D9A5;
+
+        margin-bottom: 30px;
+
+        line-height: 1.6;
+
+    }
+
+    .instructions {
+
+        font-size: 14px;
+
+        color: #E8EAF6;
+
+        margin-bottom: 30px;
+
+        line-height: 1.8;
+
+        max-width: 500px;
+
+    }
+
+    .start-button {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 14px;
+
+        padding: 16px 32px;
+
+        background: #00D9A5;
+
+        color: #0A0E27;
+
+        border: none;
+
+        border-radius: 8px;
+
+        cursor: pointer;
+
+        transition: all 0.3s;
+
+    }
+
+    .start-button:hover {
+
+        background: #00f5bc;
+
+        transform: scale(1.05);
+
+    }
+
+    .power-ups-list {
+
+        text-align: left;
+
+        margin: 20px 0;
+
+        font-size: 12px;
+
+    }
+
+    .power-ups-list li {
+
+        margin: 8px 0;
+
+        color: #9BA3C7;
+
+    }
+
+    #gameOverScreen {
+
+        display: none;
+
+    }
+
+    .final-score {
+
+        font-size: 32px;
+
+        color: #FF6B35;
+
+        margin: 20px 0;
+
+    }
+
+    @media (max-width: 768px) {
+
+        h1 {
+
+            font-size: 18px;
+
+        }
+
+        .game-stats {
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 8px;
+
+        }
+
+        .stat-value {
+
+            font-size: 12px;
+
+        }
+
+    }
+</style>
+
+```
+</head>
+<body>
+<div class="game-container">
+<div class="breadcrumb">
+<a href="index.html">Home</a> / <a href="interactive-sims.html">Interactive Sims</a> / Customer Journey Runner
+</div>
+
+```
+<div class="game-header">
+<h1>CUSTOMER JOURNEY RUNNER</h1>
+<p class="subtitle">Guide customers from awareness to conversion</p>
+</div>
+<div class="game-canvas-wrapper">
+<canvas id="gameCanvas" width="800" height="400"></canvas>
+<div id="startScreen">
+<div class="screen-title">READY TO RUN?</div>
+<div class="instructions">
+
+                Guide customers through their journey from awareness to purchase. Dodge obstacles like ad blockers and platform silos. Collect power-ups to improve attribution and conversion rates!
+</div>
+<div class="power-ups-list">
+<strong style="color: #00D9A5;">Power-Ups:</strong>
+<ul style="list-style: none;">
+<li>📊 Multi-Touch Attribution</li>
+<li>🔗 CDP Integration</li>
+<li>🎯 Identity Resolution</li>
+<li>⚡ Real-Time Data</li>
+</ul>
+</div>
+<button class="start-button" onclick="startGame()">START GAME</button>
+</div>
+<div id="gameOverScreen">
+<div class="screen-title">GAME OVER!</div>
+<div class="final-score" id="finalScore">Score: 0</div>
+<div class="instructions" id="conversionMessage"></div>
+<button class="start-button" onclick="restartGame()">PLAY AGAIN</button>
+</div>
+</div>
+<div class="game-stats">
+<div class="stat">
+<div class="stat-label">SCORE</div>
+<div class="stat-value" id="score">0</div>
+</div>
+<div class="stat">
+<div class="stat-label">CONVERSIONS</div>
+<div class="stat-value" id="conversions">0</div>
+</div>
+<div class="stat">
+<div class="stat-label">JOURNEY</div>
+<div class="stat-value" id="distance">0m</div>
+</div>
+</div>
+<div class="controls">
+<strong>SPACE</strong> to jump  •  <strong>↓</strong> to duck  •  Dodge obstacles, collect power-ups!
+</div>
+<div class="mobile-controls">
+<button class="control-btn" id="jumpBtn">JUMP</button>
+<button class="control-btn" id="duckBtn">DUCK</button>
+</div>
+</div>
+<script>
+
+    const canvas = document.getElementById('gameCanvas');
+
+    const ctx = canvas.getContext('2d');
+
+    let gameRunning = false;
+
+    let score = 0;
+
+    let conversions = 0;
+
+    let distance = 0;
+
+    let gameSpeed = 5;
+
+    let gravity = 0.8;
+
+    // Player (customer)
+
+    const player = {
+
+        x: 100,
+
+        y: 300,
+
+        width: 40,
+
+        height: 40,
+
+        velocityY: 0,
+
+        jumping: false,
+
+        ducking: false
+
+    };
+
+    // Arrays for game objects
+
+    let obstacles = [];
+
+    let powerups = [];
+
+    let particles = [];
+
+    // Obstacle types
+
+    const obstacleTypes = [
+
+        { name: 'Ad Blocker', color: '#FF6B6B', emoji: '🚫' },
+
+        { name: 'Cookie Wall', color: '#FFB020', emoji: '🍪' },
+
+        { name: 'Platform Silo', color: '#9D4EDD', emoji: '🏢' },
+
+        { name: 'Data Loss', color: '#FF6B35', emoji: '💔' }
+
+    ];
+
+    // Power-up types
+
+    const powerupTypes = [
+
+        { name: 'Multi-Touch', emoji: '📊', color: '#00D9A5' },
+
+        { name: 'CDP', emoji: '🔗', color: '#9D4EDD' },
+
+        { name: 'Identity', emoji: '🎯', color: '#FF6B35' },
+
+        { name: 'Real-Time', emoji: '⚡', color: '#FFB020' }
+
+    ];
+
+    // Keyboard controls
+
+    const keys = {};
+
+    document.addEventListener('keydown', (e) => {
+
+        keys[e.key] = true;
+
+        if (e.key === ' ' && gameRunning) {
+
+            e.preventDefault();
+
+            jump();
+
+        }
+
+    });
+
+    document.addEventListener('keyup', (e) => {
+
+        keys[e.key] = false;
+
+        if (e.key === 'ArrowDown') {
+
+            player.ducking = false;
+
+        }
+
+    });
+
+    // Mobile touch controls
+
+    const jumpBtn = document.getElementById('jumpBtn');
+
+    const duckBtn = document.getElementById('duckBtn');
+
+    jumpBtn.addEventListener('touchstart', (e) => {
+
+        e.preventDefault();
+
+        if (gameRunning) jump();
+
+    });
+
+    duckBtn.addEventListener('touchstart', (e) => {
+
+        e.preventDefault();
+
+        if (gameRunning) {
+
+            player.ducking = true;
+
+            player.height = 25;
+
+        }
+
+    });
+
+    duckBtn.addEventListener('touchend', (e) => {
+
+        e.preventDefault();
+
+        player.ducking = false;
+
+        player.height = 40;
+
+    });
+
+    // Also support mouse for desktop testing
+
+    jumpBtn.addEventListener('click', (e) => {
+
+        e.preventDefault();
+
+        if (gameRunning) jump();
+
+    });
+
+    duckBtn.addEventListener('mousedown', (e) => {
+
+        e.preventDefault();
+
+        if (gameRunning) {
+
+            player.ducking = true;
+
+            player.height = 25;
+
+        }
+
+    });
+
+    duckBtn.addEventListener('mouseup', (e) => {
+
+        e.preventDefault();
+
+        player.ducking = false;
+
+        player.height = 40;
+
+    });
+
+    function jump() {
+
+        if (!player.jumping) {
+
+            player.velocityY = -15;
+
+            player.jumping = true;
+
+        }
+
+    }
+
+    function startGame() {
+
+        document.getElementById('startScreen').style.display = 'none';
+
+        gameRunning = true;
+
+        score = 0;
+
+        conversions = 0;
+
+        distance = 0;
+
+        gameSpeed = 5;
+
+        obstacles = [];
+
+        powerups = [];
+
+        player.y = 300;
+
+        player.velocityY = 0;
+
+        player.jumping = false;
+
+        gameLoop();
+
+    }
+
+    function restartGame() {
+
+        document.getElementById('gameOverScreen').style.display = 'none';
+
+        startGame();
+
+    }
+
+    function spawnObstacle() {
+
+        if (Math.random() < 0.02) {
+
+            const type = obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)];
+
+            obstacles.push({
+
+                x: canvas.width,
+
+                y: 300,
+
+                width: 40,
+
+                height: 50,
+
+                type: type
+
+            });
+
+        }
+
+    }
+
+    function spawnPowerup() {
+
+        if (Math.random() < 0.008) {
+
+            const type = powerupTypes[Math.floor(Math.random() * powerupTypes.length)];
+
+            powerups.push({
+
+                x: canvas.width,
+
+                y: 150 + Math.random() * 100,
+
+                width: 30,
+
+                height: 30,
+
+                type: type
+
+            });
+
+        }
+
+    }
+
+    function createParticles(x, y, color) {
+
+        for (let i = 0; i < 10; i++) {
+
+            particles.push({
+
+                x: x,
+
+                y: y,
+
+                vx: (Math.random() - 0.5) * 8,
+
+                vy: (Math.random() - 0.5) * 8,
+
+                life: 30,
+
+                color: color
+
+            });
+
+        }
+
+    }
+
+    function checkCollisions() {
+
+        // Check obstacle collisions
+
+        for (let obstacle of obstacles) {
+
+            if (player.x < obstacle.x + obstacle.width &&
+
+                player.x + player.width > obstacle.x &&
+
+                player.y < obstacle.y + obstacle.height &&
+
+                player.y + player.height > obstacle.y) {
+
+                gameOver();
+
+                return;
+
+            }
+
+        }
+
+        // Check powerup collection
+
+        for (let i = powerups.length - 1; i >= 0; i--) {
+
+            const powerup = powerups[i];
+
+            if (player.x < powerup.x + powerup.width &&
+
+                player.x + player.width > powerup.x &&
+
+                player.y < powerup.y + powerup.height &&
+
+                player.y + player.height > powerup.y) {
+
+                score += 100;
+
+                conversions += 1;
+
+                createParticles(powerup.x, powerup.y, powerup.type.color);
+
+                powerups.splice(i, 1);
+
+            }
+
+        }
+
+    }
+
+    function gameOver() {
+
+        gameRunning = false;
+
+        document.getElementById('finalScore').textContent = `Score: ${score}`;
+
+        const convRate = conversions > 0 ? Math.min(100, (conversions / (distance / 50)).toFixed(1)) : 0;
+
+        document.getElementById('conversionMessage').textContent = 
+
+            `You converted ${conversions} customers over ${Math.floor(distance)}m journey. Conversion rate: ${convRate}%`;
+
+        document.getElementById('gameOverScreen').style.display = 'flex';
+
+    }
+
+    function update() {
+
+        // Player physics
+
+        if (keys['ArrowDown'] && player.y >= 300) {
+
+            player.ducking = true;
+
+            player.height = 25;
+
+        } else {
+
+            player.ducking = false;
+
+            player.height = 40;
+
+        }
+
+        player.velocityY += gravity;
+
+        player.y += player.velocityY;
+
+        if (player.y >= 300) {
+
+            player.y = 300;
+
+            player.jumping = false;
+
+            player.velocityY = 0;
+
+        }
+
+        // Update obstacles
+
+        spawnObstacle();
+
+        for (let i = obstacles.length - 1; i >= 0; i--) {
+
+            obstacles[i].x -= gameSpeed;
+
+            if (obstacles[i].x + obstacles[i].width < 0) {
+
+                obstacles.splice(i, 1);
+
+                score += 10;
+
+            }
+
+        }
+
+        // Update powerups
+
+        spawnPowerup();
+
+        for (let i = powerups.length - 1; i >= 0; i--) {
+
+            powerups[i].x -= gameSpeed;
+
+            powerups[i].y += Math.sin(Date.now() / 200 + i) * 0.5;
+
+            if (powerups[i].x + powerups[i].width < 0) {
+
+                powerups.splice(i, 1);
+
+            }
+
+        }
+
+        // Update particles
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+
+            const p = particles[i];
+
+            p.x += p.vx;
+
+            p.y += p.vy;
+
+            p.life--;
+
+            if (p.life <= 0) {
+
+                particles.splice(i, 1);
+
+            }
+
+        }
+
+        // Update stats
+
+        distance += gameSpeed / 10;
+
+        gameSpeed += 0.001;
+
+        document.getElementById('score').textContent = score;
+
+        document.getElementById('conversions').textContent = conversions;
+
+        document.getElementById('distance').textContent = Math.floor(distance) + 'm';
+
+        checkCollisions();
+
+    }
+
+    function draw() {
+
+        // Clear canvas
+
+        ctx.fillStyle = '#1a0e2e';
+
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw ground
+
+        ctx.fillStyle = 'rgba(0,217,165,0.2)';
+
+        ctx.fillRect(0, 340, canvas.width, 60);
+
+        ctx.strokeStyle = '#00D9A5';
+
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+
+        ctx.moveTo(0, 340);
+
+        ctx.lineTo(canvas.width, 340);
+
+        ctx.stroke();
+
+        // Draw player
+
+        ctx.fillStyle = '#00D9A5';
+
+        ctx.fillRect(player.x, player.y, player.width, player.height);
+
+        ctx.font = '30px Arial';
+
+        ctx.fillText('👤', player.x + 5, player.y + 30);
+
+        // Draw obstacles
+
+        for (let obstacle of obstacles) {
+
+            ctx.fillStyle = obstacle.type.color;
+
+            ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+
+            ctx.font = '35px Arial';
+
+            ctx.fillText(obstacle.type.emoji, obstacle.x + 2, obstacle.y + 35);
+
+        }
+
+        // Draw powerups
+
+        for (let powerup of powerups) {
+
+            ctx.fillStyle = powerup.type.color;
+
+            ctx.globalAlpha = 0.3;
+
+            ctx.fillRect(powerup.x, powerup.y, powerup.width, powerup.height);
+
+            ctx.globalAlpha = 1;
+
+            ctx.font = '25px Arial';
+
+            ctx.fillText(powerup.type.emoji, powerup.x, powerup.y + 23);
+
+        }
+
+        // Draw particles
+
+        for (let p of particles) {
+
+            ctx.fillStyle = p.color;
+
+            ctx.globalAlpha = p.life / 30;
+
+            ctx.fillRect(p.x, p.y, 4, 4);
+
+            ctx.globalAlpha = 1;
+
+        }
+
+    }
+
+    function gameLoop() {
+
+        if (!gameRunning) return;
+
+        update();
+
+        draw();
+
+        requestAnimationFrame(gameLoop);
+
+    }
+</script>
+
+```
+</body>
+</html>
+ 
