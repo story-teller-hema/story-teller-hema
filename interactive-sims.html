@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Simulators | Hema Kamineni</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+        :root {
+
+            --primary: #0A0E27;
+
+            --accent: #FF6B35;
+
+            --success: #00D9A5;
+
+            --purple: #9D4EDD;
+
+            --text: #E8EAF6;
+
+            --text-muted: #9BA3C7;
+
+            --border: rgba(255,255,255,0.1);
+
+        }
+
+```
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+
+        font-family: 'Work Sans', sans-serif;
+
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1129 50%, #1a0e2e 100%);
+
+        color: var(--text);
+
+        line-height: 1.6;
+
+        min-height: 100vh;
+
+    }
+
+    body::before {
+
+        content: '';
+
+        position: fixed;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        background-image: 
+
+            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+
+            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+
+        background-size: 50px 50px;
+
+        z-index: 0;
+
+        pointer-events: none;
+
+    }
+
+    .container {
+
+        max-width: 1200px;
+
+        margin: 0 auto;
+
+        padding: 80px 20px;
+
+        position: relative;
+
+        z-index: 1;
+
+    }
+
+    .breadcrumb {
+
+        font-size: 14px;
+
+        color: var(--text-muted);
+
+        margin-bottom: 32px;
+
+    }
+
+    .breadcrumb a {
+
+        color: var(--accent);
+
+        text-decoration: none;
+
+    }
+
+    h1 {
+
+        font-family: 'DM Serif Display', serif;
+
+        font-size: 56px;
+
+        font-weight: 400;
+
+        margin-bottom: 16px;
+
+        background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+
+        -webkit-background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+
+    }
+
+    .subtitle {
+
+        font-size: 20px;
+
+        color: var(--text-muted);
+
+        margin-bottom: 64px;
+
+        max-width: 600px;
+
+    }
+
+    .tools-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+
+        gap: 32px;
+
+        margin-top: 48px;
+
+    }
+
+    .tool-card {
+
+        background: rgba(255,255,255,0.03);
+
+        border: 1px solid var(--border);
+
+        border-radius: 24px;
+
+        padding: 40px;
+
+        transition: all 0.3s ease;
+
+        cursor: pointer;
+
+        text-decoration: none;
+
+        color: var(--text);
+
+        display: block;
+
+        position: relative;
+
+        overflow: hidden;
+
+    }
+
+    .tool-card::before {
+
+        content: '';
+
+        position: absolute;
+
+        top: 0;
+
+        left: 0;
+
+        right: 0;
+
+        height: 4px;
+
+        background: linear-gradient(90deg, var(--accent) 0%, #ff8c61 100%);
+
+        transform: scaleX(0);
+
+        transform-origin: left;
+
+        transition: transform 0.3s ease;
+
+    }
+
+    .tool-card:hover {
+
+        transform: translateY(-8px);
+
+        border-color: var(--accent);
+
+        box-shadow: 0 16px 48px rgba(255,107,53,0.2);
+
+    }
+
+    .tool-card:hover::before {
+
+        transform: scaleX(1);
+
+    }
+
+    .tool-card.purple::before {
+
+        background: linear-gradient(90deg, var(--purple) 0%, #b57eeb 100%);
+
+    }
+
+    .tool-card.purple:hover {
+
+        border-color: var(--purple);
+
+        box-shadow: 0 16px 48px rgba(157,78,221,0.2);
+
+    }
+
+    .tool-card.green::before {
+
+        background: linear-gradient(90deg, var(--success) 0%, #00f5bc 100%);
+
+    }
+
+    .tool-card.green:hover {
+
+        border-color: var(--success);
+
+        box-shadow: 0 16px 48px rgba(0,217,165,0.2);
+
+    }
+
+    .tool-icon {
+
+        font-size: 48px;
+
+        margin-bottom: 24px;
+
+        display: block;
+
+    }
+
+    .tool-title {
+
+        font-size: 24px;
+
+        font-weight: 600;
+
+        margin-bottom: 12px;
+
+        color: var(--text);
+
+    }
+
+    .tool-description {
+
+        font-size: 16px;
+
+        color: var(--text-muted);
+
+        line-height: 1.6;
+
+        margin-bottom: 24px;
+
+    }
+
+    .tool-features {
+
+        list-style: none;
+
+        margin-top: 20px;
+
+    }
+
+    .tool-features li {
+
+        padding: 8px 0;
+
+        padding-left: 24px;
+
+        position: relative;
+
+        color: var(--text-muted);
+
+        font-size: 14px;
+
+    }
+
+    .tool-features li::before {
+
+        content: '→';
+
+        position: absolute;
+
+        left: 0;
+
+        color: var(--accent);
+
+    }
+
+    .tool-card.purple .tool-features li::before {
+
+        color: var(--purple);
+
+    }
+
+    .tool-card.green .tool-features li::before {
+
+        color: var(--success);
+
+    }
+
+    .tool-cta {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        margin-top: 16px;
+
+        font-size: 15px;
+
+        font-weight: 600;
+
+        color: var(--accent);
+
+    }
+
+    .tool-cta::after {
+
+        content: '→';
+
+        margin-left: 8px;
+
+        transition: transform 0.3s;
+
+    }
+
+    .tool-card:hover .tool-cta::after {
+
+        transform: translateX(4px);
+
+    }
+
+    .tool-card.purple .tool-cta {
+
+        color: var(--purple);
+
+    }
+
+    .tool-card.green .tool-cta {
+
+        color: var(--success);
+
+    }
+
+    @media (max-width: 768px) {
+
+        h1 {
+
+            font-size: 36px;
+
+        }
+
+        .tools-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+        .container {
+
+            padding: 40px 20px;
+
+        }
+
+    }
+</style>
+
+```
+</head>
+<body>
+<div class="container">
+<div class="breadcrumb">
+<a href="index.html">Home</a> / Interactive Simulators
+</div>
+
+```
+<h1>Interactive Simulators</h1>
+<p class="subtitle">Hands-on tools to test hypotheses, predict outcomes, and explore marketing analytics concepts</p>
+<div class="tools-grid">
+<a href="ab-test-simulator.html" class="tool-card">
+<span class="tool-icon">🧪</span>
+<h2 class="tool-title">A/B Test Simulator</h2>
+<p class="tool-description">Run realistic A/B tests with different scenarios, sample sizes, and conversion rates. See statistical significance in action.</p>
+<ul class="tool-features">
+<li>4 realistic testing scenarios</li>
+<li>Real-time significance calculation</li>
+<li>Interactive variant selection</li>
+<li>Learn when to stop a test</li>
+</ul>
+<span class="tool-cta">Try A/B Simulator</span>
+</a>
+<a href="customer-journey-game.html" class="tool-card green">
+<span class="tool-icon">🎮</span>
+<h2 class="tool-title">Customer Journey Runner</h2>
+<p class="tool-description">Guide customers through their journey from awareness to conversion. Dodge obstacles, collect power-ups, learn about attribution.</p>
+<ul class="tool-features">
+<li>Endless runner gameplay</li>
+<li>Real marketing obstacles</li>
+<li>Attribution power-ups</li>
+<li>Mobile & desktop controls</li>
+</ul>
+<span class="tool-cta">Play the Game</span>
+</a>
+</div>
+</div>
+
+```
+</body>
+</html>
+ 
