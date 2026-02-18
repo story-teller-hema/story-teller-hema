@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G6C2CXBS3J"></script>
+<script>
+
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag(){dataLayer.push(arguments);}
+
+      gtag('js', new Date());
+
+      gtag('config', 'G-G6C2CXBS3J');
+</script>
+
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Reading Data Story: 529 Books of Insights | Hema Kamineni</title>
@@ -10,31 +24,29 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 
-        :root {
+    :root {
 
-            --primary: #0A0E27;
+        --primary: #0A0E27;
 
-            --secondary: #1a1f3a;
+        --secondary: #1a1f3a;
 
-            --accent: #FF6B35;
+        --accent: #FF6B35;
 
-            --accent-light: #FF8C61;
+        --accent-light: #FF8C61;
 
-            --success: #00D9A5;
+        --success: #00D9A5;
 
-            --purple: #9D4EDD;
+        --purple: #9D4EDD;
 
-            --blue: #3772FF;
+        --blue: #3772FF;
 
-            --text: #E8EAF6;
+        --text: #E8EAF6;
 
-            --text-muted: #9BA3C7;
+        --text-muted: #9BA3C7;
 
-            --border: rgba(255, 255, 255, 0.1);
+        --border: rgba(255, 255, 255, 0.1);
 
-        }
-
-```
+    }
 
     * {
 
@@ -552,6 +564,12 @@
 
     @media (max-width: 768px) {
 
+        article {
+
+            padding: 40px 16px;
+
+        }
+
         h1 {
 
             font-size: 32px;
@@ -564,9 +582,49 @@
 
         }
 
+        h3 {
+
+            font-size: 20px;
+
+        }
+
+        .post-intro {
+
+            font-size: 18px;
+
+            padding: 20px;
+
+        }
+
+        p {
+
+            font-size: 16px;
+
+        }
+
         .stats-grid {
 
             grid-template-columns: repeat(2, 1fr);
+
+            gap: 16px;
+
+        }
+
+        .stat-box {
+
+            padding: 16px;
+
+        }
+
+        .stat-number {
+
+            font-size: 28px;
+
+        }
+
+        .chart-container {
+
+            padding: 20px;
 
         }
 
@@ -576,10 +634,76 @@
 
         }
 
+        .book-list li {
+
+            padding: 12px;
+
+        }
+
+        blockquote {
+
+            font-size: 16px;
+
+            padding-left: 16px;
+
+        }
+
+    }
+
+    @media (max-width: 480px) {
+
+        h1 {
+
+            font-size: 28px;
+
+        }
+
+        h2 {
+
+            font-size: 22px;
+
+        }
+
+        .post-intro {
+
+            font-size: 16px;
+
+        }
+
+        .stats-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+        .stat-number {
+
+            font-size: 32px;
+
+        }
+
+        .chart-container {
+
+            padding: 16px;
+
+        }
+
+        .chart-title {
+
+            font-size: 16px;
+
+        }
+
+        .insight-box {
+
+            padding: 20px;
+
+        }
+
     }
 </style>
 
-```
+
 </head>
 <body>
 <article>
@@ -587,7 +711,7 @@
 <a href="index.html">Home</a> / <a href="blog.html">Blog</a> / Reading Data Story
 </div>
 
-```
+
 <header class="post-header">
 <span class="post-category">📚 Personal Analytics</span>
 <h1>My Reading Data Story: 529 Books of Insights</h1>
@@ -1118,7 +1242,7 @@
     });
 </script>
 
-```
+
 </body>
 </html>
  
