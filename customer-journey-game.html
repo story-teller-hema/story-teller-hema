@@ -1203,6 +1203,26 @@
 
             console.log('Score saved to leaderboard');
 
+            // GA4 Event: Score submitted to leaderboard
+
+            if (typeof gtag !== 'undefined') {
+
+                gtag('event', 'leaderboard_submission', {
+
+                    event_category: 'leaderboard',
+
+                    player_id: playerId,
+
+                    score: score,
+
+                    conversion_rate: parseFloat(convRate),
+
+                    distance: distance
+
+                });
+
+            }
+
             loadLeaderboard();
 
         }).catch((error) => {
@@ -1299,6 +1319,8 @@
 
         const listEl = document.getElementById('leaderboardList');
 
+        const currentPlayerId = getPlayerId();
+
         if (scores.length === 0) {
 
             listEl.innerHTML = '<div class="loading-text">No scores yet. Be the first!</div>';
@@ -1308,6 +1330,10 @@
         }
 
         let html = '';
+
+        let playerInTop5 = false;
+
+        let playerTopRank = null;
 
         scores.forEach((entry, index) => {
 
@@ -1325,9 +1351,41 @@
 
             `;
 
+            // Check if current player is in top 5
+
+            if (entry.playerId === currentPlayerId) {
+
+                playerInTop5 = true;
+
+                if (playerTopRank === null || rank < playerTopRank) {
+
+                    playerTopRank = rank;
+
+                }
+
+            }
+
         });
 
         listEl.innerHTML = html;
+
+        // GA4 Event: Player achieved top 5
+
+        if (playerInTop5 && typeof gtag !== 'undefined') {
+
+            gtag('event', 'leaderboard_top5_achieved', {
+
+                event_category: 'leaderboard',
+
+                player_id: currentPlayerId,
+
+                highest_rank: playerTopRank,
+
+                entries_in_top5: scores.filter(s => s.playerId === currentPlayerId).length
+
+            });
+
+        }
 
     }
 
@@ -1390,6 +1448,30 @@
         document.getElementById('rankNumber').textContent = '#' + rank;
 
         document.getElementById('yourRank').style.display = 'block';
+
+        // GA4 Event: Player rank calculated
+
+        if (typeof gtag !== 'undefined') {
+
+            gtag('event', 'leaderboard_rank_calculated', {
+
+                event_category: 'leaderboard',
+
+                player_id: playerId,
+
+                current_rank: rank,
+
+                best_score: bestScore,
+
+                best_conversion_rate: bestConvRate,
+
+                best_distance: bestDistance,
+
+                total_players: allSortedScores.length
+
+            });
+
+        }
 
     }
 
