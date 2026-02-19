@@ -1219,11 +1219,13 @@
 
         const leaderboardRef = database.ref('leaderboard');
 
+        // Fetch more entries than needed, then sort with tie-breaker logic
+
         leaderboardRef
 
             .orderByChild('score')
 
-            .limitToLast(5)
+            .limitToLast(50)  // Get more entries to ensure proper sorting
 
             .once('value')
 
@@ -1237,7 +1239,45 @@
 
                 });
 
-                displayLeaderboard(scores.reverse());
+                // Sort with tie-breaker logic:
+
+                // 1. Higher score wins
+
+                // 2. If scores equal, higher CVR wins
+
+                // 3. If CVR also equal, longer distance wins
+
+                // 4. If still equal, earlier timestamp wins
+
+                scores.sort((a, b) => {
+
+                    if (b.score !== a.score) {
+
+                        return b.score - a.score;  // Higher score first
+
+                    }
+
+                    if (b.conversionRate !== a.conversionRate) {
+
+                        return b.conversionRate - a.conversionRate;  // Higher CVR first
+
+                    }
+
+                    if (b.distance !== a.distance) {
+
+                        return b.distance - a.distance;  // Longer distance first
+
+                    }
+
+                    return a.timestamp - b.timestamp;  // Earlier timestamp first
+
+                });
+
+                // Take top 5 after sorting
+
+                const top5 = scores.slice(0, 5);
+
+                displayLeaderboard(top5);
 
                 calculateYourRank(scores);
 
@@ -1293,11 +1333,15 @@
 
     // Calculate and display player's rank
 
-    function calculateYourRank(topScores) {
+    function calculateYourRank(allSortedScores) {
 
         const playerId = getPlayerId();
 
         const bestScore = parseInt(localStorage.getItem('cjr_best_score')) || 0;
+
+        const bestConvRate = parseFloat(localStorage.getItem('cjr_best_conv_rate')) || 0;
+
+        const bestDistance = parseInt(localStorage.getItem('cjr_best_distance')) || 0;
 
         if (bestScore === 0) {
 
@@ -1307,37 +1351,45 @@
 
         }
 
-        // Get all scores to calculate rank
+        // Find your rank using tie-breaker logic
 
-        database.ref('leaderboard')
+        let rank = 1;
 
-            .orderByChild('score')
+        for (const entry of allSortedScores) {
 
-            .once('value')
+            // If this entry beats your best score
 
-            .then((snapshot) => {
+            if (entry.score > bestScore) {
 
-                const allScores = [];
+                rank++;
 
-                snapshot.forEach((child) => {
+            }
 
-                    allScores.push(child.val().score);
+            // If scores are equal, check tie-breakers
 
-                });
+            else if (entry.score === bestScore) {
 
-                allScores.sort((a, b) => b - a);
+                if (entry.conversionRate > bestConvRate) {
 
-                const rank = allScores.findIndex(s => s <= bestScore) + 1;
+                    rank++;  // They have better CVR
 
-                if (rank > 0) {
+                } else if (entry.conversionRate === bestConvRate) {
 
-                    document.getElementById('rankNumber').textContent = '#' + rank;
+                    if (entry.distance > bestDistance) {
 
-                    document.getElementById('yourRank').style.display = 'block';
+                        rank++;  // They have better distance
+
+                    }
 
                 }
 
-            });
+            }
+
+        }
+
+        document.getElementById('rankNumber').textContent = '#' + rank;
+
+        document.getElementById('yourRank').style.display = 'block';
 
     }
 
