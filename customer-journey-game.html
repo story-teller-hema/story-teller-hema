@@ -243,6 +243,172 @@
 
     }
 
+    .global-leaderboard {
+
+        margin-top: 24px;
+
+        background: rgba(0,0,0,0.5);
+
+        border: 3px solid #FFB020;
+
+        border-radius: 12px;
+
+        padding: 20px;
+
+        box-shadow: 0 0 20px rgba(255,176,32,0.3), inset 0 0 20px rgba(255,176,32,0.1);
+
+    }
+
+    .leaderboard-title {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 11px;
+
+        color: #FFB020;
+
+        text-align: center;
+
+        margin-bottom: 16px;
+
+        text-shadow: 0 0 10px rgba(255,176,32,0.5);
+
+    }
+
+    .leaderboard-list {
+
+        margin-bottom: 16px;
+
+    }
+
+    .leaderboard-entry {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        padding: 8px 12px;
+
+        background: rgba(255,255,255,0.03);
+
+        border-radius: 6px;
+
+        margin-bottom: 6px;
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 9px;
+
+    }
+
+    .leaderboard-entry.rank-1 {
+
+        background: rgba(255,215,0,0.1);
+
+        border: 1px solid rgba(255,215,0,0.3);
+
+    }
+
+    .leaderboard-entry.rank-2 {
+
+        background: rgba(192,192,192,0.1);
+
+        border: 1px solid rgba(192,192,192,0.3);
+
+    }
+
+    .leaderboard-entry.rank-3 {
+
+        background: rgba(205,127,50,0.1);
+
+        border: 1px solid rgba(205,127,50,0.3);
+
+    }
+
+    .entry-rank {
+
+        color: #FFB020;
+
+        min-width: 20px;
+
+    }
+
+    .entry-name {
+
+        flex: 1;
+
+        color: #E8EAF6;
+
+        margin-left: 12px;
+
+    }
+
+    .entry-score {
+
+        color: #00D9A5;
+
+        margin-right: 8px;
+
+    }
+
+    .entry-cvr {
+
+        color: #9BA3C7;
+
+    }
+
+    .loading-text {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 8px;
+
+        color: #9BA3C7;
+
+        text-align: center;
+
+        padding: 20px;
+
+    }
+
+    .your-rank {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 9px;
+
+        color: #00D9A5;
+
+        text-align: center;
+
+        padding: 12px;
+
+        background: rgba(0,217,165,0.1);
+
+        border-radius: 6px;
+
+        margin-bottom: 12px;
+
+    }
+
+    .leaderboard-disclaimer {
+
+        font-family: 'Work Sans', sans-serif;
+
+        font-size: 11px;
+
+        color: #9BA3C7;
+
+        text-align: center;
+
+        font-style: italic;
+
+        line-height: 1.4;
+
+    }
+
     .game-canvas-wrapper {
 
         position: relative;
@@ -579,6 +745,44 @@
 
         }
 
+        .global-leaderboard {
+
+            padding: 16px 12px;
+
+            margin-top: 16px;
+
+        }
+
+        .leaderboard-title {
+
+            font-size: 9px;
+
+            margin-bottom: 12px;
+
+        }
+
+        .leaderboard-entry {
+
+            font-size: 7px;
+
+            padding: 6px 8px;
+
+        }
+
+        .your-rank {
+
+            font-size: 8px;
+
+            padding: 10px;
+
+        }
+
+        .leaderboard-disclaimer {
+
+            font-size: 10px;
+
+        }
+
         .game-canvas-wrapper {
 
             border-width: 3px;
@@ -709,6 +913,9 @@
 
     }
 </style>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 
 </head>
@@ -739,6 +946,20 @@
 <span class="best-value" id="bestDistance">---m</span>
 <span class="best-metric">DISTANCE</span>
 </div>
+</div>
+</div>
+<div class="global-leaderboard">
+<div class="leaderboard-title">🏆 GLOBAL LEADERBOARD 🏆</div>
+<div class="leaderboard-list" id="leaderboardList">
+<div class="loading-text">Loading top scores...</div>
+</div>
+<div class="your-rank" id="yourRank" style="display:none;">
+
+                Your Rank: <span id="rankNumber">--</span>
+</div>
+<div class="leaderboard-disclaimer">
+
+                ⏱️ High scores save every 60 seconds to prevent spam. Keep playing!
 </div>
 </div>
 </div>
@@ -858,9 +1079,277 @@
 
     }
 
-    // Load personal best on page load
+    // Firebase Configuration and Initialization
 
-    window.addEventListener('load', loadPersonalBest);
+    const firebaseConfig = {
+
+        apiKey: "AIzaSyAdLN5-HSSMtYEaA6qO10Y08IGqdN3EMhY",
+
+        authDomain: "customer-journey-leaderboard.firebaseapp.com",
+
+        databaseURL: "https://customer-journey-leaderboard-default-rtdb.firebaseio.com",
+
+        projectId: "customer-journey-leaderboard",
+
+        storageBucket: "customer-journey-leaderboard.firebasestorage.app",
+
+        messagingSenderId: "1071067262770",
+
+        appId: "1:1071067262770:web:8ce0178dea23151f67b12b"
+
+    };
+
+    // Initialize Firebase
+
+    firebase.initializeApp(firebaseConfig);
+
+    const database = firebase.database();
+
+    // Rate limiting for leaderboard submissions
+
+    let lastSubmissionTime = 0;
+
+    const SUBMISSION_COOLDOWN = 60000; // 60 seconds
+
+    // Generate anonymous player ID (stored in localStorage)
+
+    function getPlayerId() {
+
+        let playerId = localStorage.getItem('cjr_player_id');
+
+        if (!playerId) {
+
+            playerId = 'PLAYER_' + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+            localStorage.setItem('cjr_player_id', playerId);
+
+        }
+
+        return playerId;
+
+    }
+
+    // Validate score to prevent cheating
+
+    function isValidScore(score, convRate, distance) {
+
+        if (score < 0 || score > 5000) return false;
+
+        if (convRate < 0 || convRate > 100) return false;
+
+        if (distance < 0 || distance > 10000) return false;
+
+        // Score should roughly match distance traveled
+
+        const minExpectedScore = (distance / 50) * 5;
+
+        const maxExpectedScore = (distance / 50) * 150;
+
+        if (score < minExpectedScore * 0.5 || score > maxExpectedScore * 2) {
+
+            return false;
+
+        }
+
+        return true;
+
+    }
+
+    // Save score to Firebase leaderboard
+
+    function saveToLeaderboard(score, convRate, distance) {
+
+        const now = Date.now();
+
+        // Check rate limiting
+
+        if (now - lastSubmissionTime < SUBMISSION_COOLDOWN) {
+
+            console.log('Rate limited - wait ' + Math.ceil((SUBMISSION_COOLDOWN - (now - lastSubmissionTime)) / 1000) + ' seconds');
+
+            return;
+
+        }
+
+        // Validate score
+
+        if (!isValidScore(score, convRate, distance)) {
+
+            console.log('Invalid score detected');
+
+            return;
+
+        }
+
+        const playerId = getPlayerId();
+
+        const leaderboardRef = database.ref('leaderboard');
+
+        leaderboardRef.push({
+
+            playerId: playerId,
+
+            score: score,
+
+            conversionRate: parseFloat(convRate),
+
+            distance: distance,
+
+            timestamp: now
+
+        }).then(() => {
+
+            lastSubmissionTime = now;
+
+            console.log('Score saved to leaderboard');
+
+            loadLeaderboard();
+
+        }).catch((error) => {
+
+            console.error('Error saving score:', error);
+
+        });
+
+    }
+
+    // Load top 5 scores from Firebase
+
+    function loadLeaderboard() {
+
+        const leaderboardRef = database.ref('leaderboard');
+
+        leaderboardRef
+
+            .orderByChild('score')
+
+            .limitToLast(5)
+
+            .once('value')
+
+            .then((snapshot) => {
+
+                const scores = [];
+
+                snapshot.forEach((child) => {
+
+                    scores.push(child.val());
+
+                });
+
+                displayLeaderboard(scores.reverse());
+
+                calculateYourRank(scores);
+
+            })
+
+            .catch((error) => {
+
+                console.error('Error loading leaderboard:', error);
+
+                document.getElementById('leaderboardList').innerHTML = '<div class="loading-text">Failed to load scores</div>';
+
+            });
+
+    }
+
+    // Display leaderboard entries
+
+    function displayLeaderboard(scores) {
+
+        const listEl = document.getElementById('leaderboardList');
+
+        if (scores.length === 0) {
+
+            listEl.innerHTML = '<div class="loading-text">No scores yet. Be the first!</div>';
+
+            return;
+
+        }
+
+        let html = '';
+
+        scores.forEach((entry, index) => {
+
+            const rank = index + 1;
+
+            const rankClass = rank <= 3 ? `rank-${rank}` : '';
+
+            html += `
+<div class="leaderboard-entry ${rankClass}">
+<span class="entry-rank">${rank}.</span>
+<span class="entry-name">${entry.playerId}</span>
+<span class="entry-score">${entry.score}</span>
+<span class="entry-cvr">${entry.conversionRate}%</span>
+</div>
+
+            `;
+
+        });
+
+        listEl.innerHTML = html;
+
+    }
+
+    // Calculate and display player's rank
+
+    function calculateYourRank(topScores) {
+
+        const playerId = getPlayerId();
+
+        const bestScore = parseInt(localStorage.getItem('cjr_best_score')) || 0;
+
+        if (bestScore === 0) {
+
+            document.getElementById('yourRank').style.display = 'none';
+
+            return;
+
+        }
+
+        // Get all scores to calculate rank
+
+        database.ref('leaderboard')
+
+            .orderByChild('score')
+
+            .once('value')
+
+            .then((snapshot) => {
+
+                const allScores = [];
+
+                snapshot.forEach((child) => {
+
+                    allScores.push(child.val().score);
+
+                });
+
+                allScores.sort((a, b) => b - a);
+
+                const rank = allScores.findIndex(s => s <= bestScore) + 1;
+
+                if (rank > 0) {
+
+                    document.getElementById('rankNumber').textContent = '#' + rank;
+
+                    document.getElementById('yourRank').style.display = 'block';
+
+                }
+
+            });
+
+    }
+
+    // Load personal best and leaderboard on page load
+
+    window.addEventListener('load', () => {
+
+        loadPersonalBest();
+
+        loadLeaderboard();
+
+    });
 
     const canvas = document.getElementById('gameCanvas');
 
@@ -1353,6 +1842,10 @@
         }
 
         document.getElementById('conversionMessage').textContent = message;
+
+        // Save to Firebase leaderboard (with rate limiting)
+
+        saveToLeaderboard(score, convRate, Math.floor(distance));
 
         // GA4 Event: Game Over with metrics
 
