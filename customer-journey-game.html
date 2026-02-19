@@ -129,6 +129,120 @@
 
     }
 
+    .personal-best {
+
+        margin-top: 24px;
+
+        background: rgba(0,0,0,0.5);
+
+        border: 3px solid #00D9A5;
+
+        border-radius: 12px;
+
+        padding: 16px 24px;
+
+        box-shadow: 0 0 20px rgba(0,217,165,0.3), inset 0 0 20px rgba(0,217,165,0.1);
+
+    }
+
+    .best-label {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 10px;
+
+        color: #FFB020;
+
+        text-align: center;
+
+        margin-bottom: 12px;
+
+        text-shadow: 0 0 10px rgba(255,176,32,0.5);
+
+        animation: glow 2s ease-in-out infinite;
+
+    }
+
+    @keyframes glow {
+
+        0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(255,176,32,0.5); }
+
+        50% { opacity: 0.8; text-shadow: 0 0 20px rgba(255,176,32,0.8); }
+
+    }
+
+    .best-stats {
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 16px;
+
+    }
+
+    .best-stat {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+    }
+
+    .best-value {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 16px;
+
+        color: #00D9A5;
+
+        text-shadow: 0 0 10px rgba(0,217,165,0.6);
+
+        margin-bottom: 4px;
+
+    }
+
+    .best-value.new-record {
+
+        animation: recordFlash 0.5s ease-in-out 3;
+
+    }
+
+    @keyframes recordFlash {
+
+        0%, 100% { color: #00D9A5; transform: scale(1); }
+
+        50% { color: #FFB020; transform: scale(1.2); }
+
+    }
+
+    .best-metric {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 7px;
+
+        color: #9BA3C7;
+
+        text-transform: uppercase;
+
+    }
+
+    .best-divider {
+
+        font-family: 'Press Start 2P', cursive;
+
+        font-size: 16px;
+
+        color: #9BA3C7;
+
+    }
+
     .game-canvas-wrapper {
 
         position: relative;
@@ -425,6 +539,46 @@
 
         }
 
+        .personal-best {
+
+            padding: 12px 16px;
+
+            margin-top: 16px;
+
+        }
+
+        .best-label {
+
+            font-size: 8px;
+
+            margin-bottom: 8px;
+
+        }
+
+        .best-stats {
+
+            gap: 8px;
+
+        }
+
+        .best-value {
+
+            font-size: 12px;
+
+        }
+
+        .best-metric {
+
+            font-size: 6px;
+
+        }
+
+        .best-divider {
+
+            font-size: 12px;
+
+        }
+
         .game-canvas-wrapper {
 
             border-width: 3px;
@@ -568,6 +722,25 @@
 <div class="game-header">
 <h1>CUSTOMER JOURNEY RUNNER</h1>
 <p class="subtitle">Guide customers from awareness to conversion</p>
+<div class="personal-best">
+<div class="best-label">🏆 YOUR PERSONAL BEST 🏆</div>
+<div class="best-stats">
+<div class="best-stat">
+<span class="best-value" id="bestScore">---</span>
+<span class="best-metric">POINTS</span>
+</div>
+<div class="best-divider">|</div>
+<div class="best-stat">
+<span class="best-value" id="bestConvRate">---%</span>
+<span class="best-metric">CVR</span>
+</div>
+<div class="best-divider">|</div>
+<div class="best-stat">
+<span class="best-value" id="bestDistance">---m</span>
+<span class="best-metric">DISTANCE</span>
+</div>
+</div>
+</div>
 </div>
 <div class="game-canvas-wrapper">
 <canvas id="gameCanvas" width="800" height="400"></canvas>
@@ -575,7 +748,7 @@
 <div class="screen-title">READY TO RUN?</div>
 <div class="instructions">
 
-                Guide customers through their journey from awareness to purchase. Dodge obstacles like ad blockers and platform silos. Collect power-ups to improve attribution and conversion rates!
+                Guide customers through their journey from awareness to purchase. <strong>Jump over</strong> ground obstacles (🚫 🏢) and <strong>duck under</strong> flying obstacles (🍪 💔). Collect power-ups to improve attribution and conversion rates!
 </div>
 <div class="power-ups-list">
 <strong style="color: #00D9A5;">Power-Ups:</strong>
@@ -618,6 +791,76 @@
 </div>
 </div>
 <script>
+
+    // Personal Best Tracking with localStorage
+
+    function loadPersonalBest() {
+
+        const bestScore = localStorage.getItem('cjr_best_score') || '---';
+
+        const bestConvRate = localStorage.getItem('cjr_best_conv_rate') || '---';
+
+        const bestDistance = localStorage.getItem('cjr_best_distance') || '---';
+
+        document.getElementById('bestScore').textContent = bestScore === '---' ? '---' : bestScore;
+
+        document.getElementById('bestConvRate').textContent = bestConvRate === '---' ? '---' : bestConvRate + '%';
+
+        document.getElementById('bestDistance').textContent = bestDistance === '---' ? '---' : bestDistance + 'm';
+
+    }
+
+    function checkAndSavePersonalBest(score, convRate, distance) {
+
+        let newRecord = false;
+
+        const currentBest = parseInt(localStorage.getItem('cjr_best_score')) || 0;
+
+        if (score > currentBest) {
+
+            localStorage.setItem('cjr_best_score', score);
+
+            localStorage.setItem('cjr_best_conv_rate', convRate);
+
+            localStorage.setItem('cjr_best_distance', distance);
+
+            newRecord = true;
+
+            // Update display with animation
+
+            document.getElementById('bestScore').textContent = score;
+
+            document.getElementById('bestScore').classList.add('new-record');
+
+            document.getElementById('bestConvRate').textContent = convRate + '%';
+
+            document.getElementById('bestConvRate').classList.add('new-record');
+
+            document.getElementById('bestDistance').textContent = distance + 'm';
+
+            document.getElementById('bestDistance').classList.add('new-record');
+
+            // Remove animation class after it completes
+
+            setTimeout(() => {
+
+                document.querySelectorAll('.best-value').forEach(el => {
+
+                    el.classList.remove('new-record');
+
+                });
+
+            }, 1500);
+
+        }
+
+        return newRecord;
+
+    }
+
+    // Load personal best on page load
+
+    window.addEventListener('load', loadPersonalBest);
 
     const canvas = document.getElementById('gameCanvas');
 
@@ -733,13 +976,13 @@
 
     const obstacleTypes = [
 
-        { name: 'Ad Blocker', color: '#FF6B6B', emoji: '🚫' },
+        { name: 'Ad Blocker', color: '#FF6B6B', emoji: '🚫', flying: false },
 
-        { name: 'Cookie Wall', color: '#FFB020', emoji: '🍪' },
+        { name: 'Cookie Wall', color: '#FFB020', emoji: '🍪', flying: true },  // Flying - need to duck
 
-        { name: 'Platform Silo', color: '#9D4EDD', emoji: '🏢' },
+        { name: 'Platform Silo', color: '#9D4EDD', emoji: '🏢', flying: false },
 
-        { name: 'Data Loss', color: '#FF6B35', emoji: '💔' }
+        { name: 'Data Loss', color: '#FF6B35', emoji: '💔', flying: true }  // Flying - need to duck
 
     ];
 
@@ -913,6 +1156,20 @@
 
         player.jumping = false;
 
+        // GA4 Event: Game Started
+
+        if (typeof gtag !== 'undefined') {
+
+            gtag('event', 'game_start', {
+
+                game_name: 'customer_journey_runner',
+
+                event_category: 'game_interaction'
+
+            });
+
+        }
+
         gameLoop();
 
     }
@@ -933,15 +1190,21 @@
 
             const type = obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)];
 
+            // Flying obstacles are higher up (need to duck), ground obstacles are at ground level (need to jump)
+
+            const yPosition = type.flying ? 230 : 300;  // Flying at 230, ground at 300
+
+            const height = type.flying ? 40 : 50;
+
             obstacles.push({
 
                 x: canvasSize.width,
 
-                y: 300,
+                y: yPosition,
 
                 width: 40,
 
-                height: 50,
+                height: height,
 
                 type: type
 
@@ -1043,6 +1306,24 @@
 
                 createParticles(powerup.x, powerup.y, powerup.type.color);
 
+                // GA4 Event: Power-up collected (optional - for detailed analysis)
+
+                if (typeof gtag !== 'undefined') {
+
+                    gtag('event', 'powerup_collected', {
+
+                        game_name: 'customer_journey_runner',
+
+                        powerup_type: powerup.type.name,
+
+                        current_conversions: conversions,
+
+                        current_score: score
+
+                    });
+
+                }
+
                 powerups.splice(i, 1);
 
             }
@@ -1059,9 +1340,45 @@
 
         const convRate = conversions > 0 ? Math.min(100, (conversions / (distance / 50)).toFixed(1)) : 0;
 
-        document.getElementById('conversionMessage').textContent = 
+        // Check if new personal best
 
-            `You converted ${conversions} customers over ${Math.floor(distance)}m journey. Conversion rate: ${convRate}%`;
+        const isNewRecord = checkAndSavePersonalBest(score, convRate, Math.floor(distance));
+
+        let message = `You converted ${conversions} customers over ${Math.floor(distance)}m journey. Conversion rate: ${convRate}%`;
+
+        if (isNewRecord) {
+
+            message += `\n\n🏆 NEW PERSONAL BEST! 🏆`;
+
+        }
+
+        document.getElementById('conversionMessage').textContent = message;
+
+        // GA4 Event: Game Over with metrics
+
+        if (typeof gtag !== 'undefined') {
+
+            gtag('event', 'game_over', {
+
+                game_name: 'customer_journey_runner',
+
+                event_category: 'game_interaction',
+
+                score: score,
+
+                conversions: conversions,
+
+                distance: Math.floor(distance),
+
+                conversion_rate: parseFloat(convRate),
+
+                value: score,
+
+                is_new_record: isNewRecord
+
+            });
+
+        }
 
         document.getElementById('gameOverScreen').style.display = 'flex';
 
